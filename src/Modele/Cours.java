@@ -18,7 +18,6 @@ public class Cours {
     public Cours(int id, String nom) {
         this.id = id;
         this.nom = nom;
-
     }
     
     /**
@@ -32,6 +31,22 @@ public class Cours {
     } 
     
     
+    
+    //Getters 
+    public int getId() {
+        return id;
+    }    
+    public String getNom() {
+        return nom;
+    }
+    //Setters
+    public void setId(int id) {
+        this.id = id;
+    } 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    
     /*
     @Override
     public boolean equals(Object inscription){
@@ -40,25 +55,6 @@ public class Cours {
                 ((Inscription) inscription).classe.equals(this.classe)&&
                 ((Inscription) inscription).eleve.equals(this.eleve);
     } */
-    
-    
-    //Getters 
-    public int getId() {
-        return id;
-    }
-    
-    public String getNom() {
-        return nom;
-    }
-
-    //Setters
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     
 }
