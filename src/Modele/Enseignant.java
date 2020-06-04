@@ -35,7 +35,7 @@ public class Enseignant {
         return id_utilisateur;
     }
     
-    public String getId_cours() {
+    public int getId_cours() {
         return id_cours;
     }
 
