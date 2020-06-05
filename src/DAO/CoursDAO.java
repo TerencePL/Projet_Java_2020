@@ -30,7 +30,7 @@ public class CoursDAO extends DAO<Cours>{
             while(rs1.next()){
                 int id=rs1.getInt("id");                                
                 
-                Cours cours=new Cours();//Instancier la classe puis l'ajouter ├а l'Array de toutes les classes
+                Cours cours=new Cours();//Instancier la classe puis l'ajouter ра l'Array de toutes les classes
                 cours=this.find(id);
                 
                 all.add(cours);
