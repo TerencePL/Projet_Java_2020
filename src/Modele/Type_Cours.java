@@ -4,18 +4,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class type_cours {
+public class Type_Cours {
     private int id; //clé primaire
     private String nom;
     
     //Constructeur par default
-    public type_cours(){
+    public Type_Cours(){
         id = 0;
         nom = "";     
     }
 
     //constructeur surchargé
-    public type_cours(int id,String nom) {
+    public Type_Cours(int id,String nom) {
         this.id = id;
         this.nom = nom;
     }

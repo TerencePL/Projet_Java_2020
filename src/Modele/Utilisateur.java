@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class utilisateur {
+public class Utilisateur {
     private int id; //clé primaire
     private String email;
     private String passwd;
@@ -13,7 +13,7 @@ public class utilisateur {
     private int droit;
     
     //Constructeur par default
-    public utilisateur(){
+    public Utilisateur(){
         id = 0;
         email = "";
         passwd = "";
@@ -23,7 +23,7 @@ public class utilisateur {
     }
 
     //constructeur surchargé
-    public utilisateur(int id,String email,String passwd,String nom,String prenom,int droit) {
+    public Utilisateur(int id,String email,String passwd,String nom,String prenom,int droit) {
         this.id = id;
         this.email = email;
         this.passwd = passwd;

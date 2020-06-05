@@ -33,17 +33,14 @@ public class Enseignant {
     //Getters 
     public int getId_utilisateur() {
         return id_utilisateur;
-    }
-    
+    } 
     public int getId_cours() {
         return id_cours;
     }
-
     //Setters
     public void setId(int id_utilisateur) {
         this.id_utilisateur = id_utilisateur;
-    }
-    
+    }  
     public void setId_cours(int id_cours) {
         this.id_cours = id_cours;
     }
