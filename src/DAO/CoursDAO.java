@@ -94,10 +94,12 @@ public class CoursDAO extends DAO<Cours>{
         	 System.out.println("Balise DAO/CoursDAO");
            // stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             stmt = con.createStatement();
+            //PreparedStatement prepare=con.prepareStatement("INSERT INTO cours (id,nom) VALUES ("+id+","+nom+")");
             PreparedStatement prepare=con.prepareStatement("INSERT INTO cours (id,nom) VALUES (?,?)");
             
-            prepare.setString(1, nom);
-            prepare.setInt(2,id);
+            
+            prepare.setInt(1,id);
+            prepare.setString(2, nom);
             
             prepare.executeUpdate();
             
