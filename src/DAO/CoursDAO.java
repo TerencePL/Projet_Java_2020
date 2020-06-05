@@ -48,6 +48,7 @@ public class CoursDAO extends DAO<Cours>{
     @Override
     public Cours find(int id) {
         Cours cours=new Cours();
+        Enseignant enseign = new Enseignant();
         //Trimestre trimestre=new Trimestre();
         //Inscription inscription=new Inscription();
         
@@ -58,8 +59,13 @@ public class CoursDAO extends DAO<Cours>{
             
             if(rs.next()){
                 String nom=rs.getString("nom");
+                int id_cours=rs.getInt("id");
                 //int id_trimestre=rs.getInt("id_trimestre");
                 //int id_inscription=rs.getInt("id_inscription");
+                
+              //Instancier un enseignant
+                EnseignantDAO enseigndao=new EnseignantDAO();
+                enseign = enseigndao.find(id_cours);
                 
                 //Instancier un trimestre
                 //TrimestreDAO trimestredao=new TrimestreDAO();
@@ -71,11 +77,9 @@ public class CoursDAO extends DAO<Cours>{
                 
                 //Instancier le bulletin à retourner
                 cours=new Cours(id,nom);
-            }
+            }    
             
-            
-            
-        } catch (SQLException ex) {  //catch (SQLException | ClassNotFoundException ex)
+        } catch (SQLException | ClassNotFoundException ex) {  //catch (SQLException | ClassNotFoundException ex)
             Logger.getLogger(CoursDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cours;

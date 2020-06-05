@@ -16,7 +16,7 @@ public class AddCours {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		createActionPerformed();
+		//createActionPerformed();
 	}
 
     //Ajout d'une classe
@@ -69,10 +69,7 @@ public class AddCours {
             System.out.println("La classe "+cours.getNom()+" a été ajoutée.");
             //JOptionPane.showMessageDialog(rootPane, "La classe "+cours.getNom()+" a été ajoutée.");
 
-            //dispose();
-        
-            
-            
+            //dispose();          
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,4 +79,45 @@ public class AddCours {
         
         
     }//GEN-LAST:event_createActionPerformed
+    
+    //Ajout d'un cours
+    static void ajout(String nouveauNom) {//GEN-FIRST:event_createActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            Cours cours=new Cours();
+            CoursDAO coursDAO=new CoursDAO();
+                    
+            int id=0;  
+            
+            //On récupère les champs
+            String nom = nouveauNom; 
+               
+            cours=new Cours(id,nom);
+            cours=coursDAO.create(cours);
+            
+            //L'afficher dans le tableau
+            Object []cours1= {cours.getId(),cours.getNom()};
+            modelCours.insertRow(modelCours.getRowCount(), cours1);
+            
+            //mettre à  jour l'arraylist de classes
+            CoursVue.cours1=CoursVue.coursDAO.all();
+            
+            
+            //CrÃ©er aussi 3 trimestres pour l'annÃ©e choisie
+            
+            //Message de confirmation
+            System.out.println("Cours "+cours.getNom()+" ajoutée.");
+
+            //dispose();
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }//GEN-LAST:event_createActionPerformed
+    
+    
+    
+    
+    
 }
