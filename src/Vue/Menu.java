@@ -169,7 +169,7 @@ public class Menu extends javax.swing.JFrame {
     //Quitter
     private void quitterActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        dispose();
+        dispose();//Ferme le menu
         System.exit(0);//Met fin au programme
     }
     
