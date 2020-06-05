@@ -26,15 +26,23 @@ public class Connexion {
   static public Connection Connexion(){
                     
       
-          try {
-          	
-              Class.forName("com.mysql.jdbc.Driver");
+          try {  
+        	  
+        	  System.out.println("Balise DAO/connexion");
+              //Class.forName("com.mysql.jdbc.Driver");
+        	  Class.forName("com.mysql.jdbc.Driver");
               //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bdd+"?autoReconnect=true&useSSL=false", username, password);
-              con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+"javabdd"+"?autoReconnect=true&useSSL=false","root","");
+        	  
+             // con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+"javabdd"+"?autoReconnect=true&useSSL=false","root","");
+              
+
+               //création d'une connexion JDBC à la base 
+               con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javabdd", "root", "");
+               stmt = con.createStatement();
               
               if(con!=null){
               	
-                  System.out.println("Connexion à la base "+bdd+" OK");                     
+                  System.out.println("Connexion � la base "+bdd+" OK");                     
               } 
               else{
               	

@@ -1,5 +1,10 @@
 package DAO;
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import Modele.*;
 import static DAO.Connexion.*;
 import java.sql.*;
@@ -22,17 +27,22 @@ public abstract class DAO<T>{
      */
     public DAO() throws ClassNotFoundException, SQLException{
         try{
-        	System.out.println("test");
-            Class.forName("com.mysql.jdbc.Driver");
+        	System.out.println("Balise DAO/DAO");
+            //Class.forName("com.mysql.jdbc.Driver");
+        	Class.forName("com.mysql.jdbc.Driver");
             //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+Connexion.getBdd()+"?autoReconnect=true&useSSL=false", Connexion.getUsername(), Connexion.getPassword());
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+"javabdd"+"?autoReconnect=true&useSSL=false","root", "");
+            //con=DriverManager.getConnection("jdbc:mysql://localhost:3306/"+"javabdd"+"?autoReconnect=true&useSSL=false","root", "");
+            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javabdd?" + "user=root&password=");
+            
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/javabdd", "root", "");
+            stmt = con.createStatement();
             
             if(con==null){
                 throw new ClassNotFoundException();          
             }
         }
         catch(ClassNotFoundException | SQLException e){
-            System.out.println("Problème de connexion.");
+            System.out.println("Problème de connexion DAO.");
             
         }
 }

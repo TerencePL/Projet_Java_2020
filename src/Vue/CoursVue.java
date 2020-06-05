@@ -23,6 +23,9 @@ import javax.swing.table.DefaultTableModel;
 
  */
 public class CoursVue extends javax.swing.JFrame {
+	
+	
+	
     
     static ArrayList<Cours> cours1=new ArrayList();
     static CoursDAO coursDAO;
@@ -34,6 +37,14 @@ public class CoursVue extends javax.swing.JFrame {
     
     static DefaultTableModel modelCours;
 
+    
+    
+    
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		fillCours2();
+	}
+	
     /**
      * Creates new form Classes
      */
@@ -41,15 +52,15 @@ public class CoursVue extends javax.swing.JFrame {
         //initComponents();          
         //modelCours=(DefaultTableModel) jTable1.getModel();
         addCours=new AddCours(); //ON récupère tous les niveaux, annees associés.
-        fillClasses();
+        fillCours2();
         
         
     }
     
     /**
-     * Remplit le tableau de classes avec celles trouvées dans la bdd
+     * Remplit le tableau de classes avec celles trouv�es dans la bdd, version graphique
      */
-    public void fillClasses(){
+    public void fillCours(){
         try {          
             coursDAO= new CoursDAO();
             
@@ -75,6 +86,39 @@ public class CoursVue extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        }
+    }
+    
+    /**
+     * Remplit le tableau de classes avec celles trouv�es dans la bdd, version consolle
+     */
+    public static void fillCours2(){
+        try {          
+            coursDAO= new CoursDAO();
+            
+            cours1=coursDAO.all(); //On récupère toutes les lignes de la table classe
+            
+            
+            for(int i=0;i<cours1.size();i++){
+                int id=cours1.get(i).getId();
+                String nom=cours1.get(i).getNom();
+                
+                //String niveau=classes.get(i).getNiveau().getNom();
+                //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
+                //String ecole=classes.get(i).getEcole().getNom();
+                
+                //Cree l'object à mettre dans le model
+                Object[]cls={id,nom};
+                
+                //System.out.println(""+nom);
+                //modelCours.insertRow(modelCours.getRowCount(), cls);                
+                cours1.get(i).afficher();
+                
+                
+                
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+        	System.out.println( "Il semblerait qu'une erreur soit survenue.");
         }
     }
 

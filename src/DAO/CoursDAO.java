@@ -5,6 +5,7 @@ package DAO;
 import Modele.*;
 import static DAO.Connexion.*;
 import java.sql.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,8 +91,10 @@ public class CoursDAO extends DAO<Cours>{
        // int id_trimestre=bulletin.getTrimestre().getId_trimestre();
         
         try {
-            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            PreparedStatement prepare=con.prepareStatement("INSERT INTO cours (nom) VALUES (?)");
+        	 System.out.println("Balise DAO/CoursDAO");
+           // stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            stmt = con.createStatement();
+            PreparedStatement prepare=con.prepareStatement("INSERT INTO cours (id,nom) VALUES (?,?)");
             
             prepare.setString(1, nom);
             prepare.setInt(2,id);
