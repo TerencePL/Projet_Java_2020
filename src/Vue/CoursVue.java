@@ -20,9 +20,6 @@ import Modele.Seance_Salles;
 import Modele.Site;
 import Modele.Utilisateur;
 
-//Modele.AnneeScolaire;
-//import Modele.Ecole;
-//import Modele.Niveau;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,9 +34,7 @@ import javax.swing.table.DefaultTableModel;
 
  */
 public class CoursVue extends javax.swing.JFrame {
-	
-	
-	
+
     
     static ArrayList<Cours> cours1=new ArrayList();
     static CoursDAO coursDAO;
@@ -92,6 +87,8 @@ public class CoursVue extends javax.swing.JFrame {
             System.out.println("fillcours");
             for(int i=0;i<cours1.size();i++){
             	
+            	String etatStr="";
+            	
                 int id=cours1.get(i).getId();
                 String nom=cours1.get(i).getNom();
                 
@@ -107,6 +104,7 @@ public class CoursVue extends javax.swing.JFrame {
                 Date date = seance.getDate();
                 int heure_debut= seance.getHeure_debut();
                 int heure_fin = seance.getHeure_fin();
+                int etat = seance.getEtat();
                 
                 Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
                 int id_salle = seance_salle.getId_seance();
@@ -118,12 +116,23 @@ public class CoursVue extends javax.swing.JFrame {
                 
                 Site site = siteDAO.find(id_site);
                 String nom_site = site.getNom();
-                            
+                
+                
+                switch(etat){
+                	case 0: etatStr = "En cours de validation";
+                			break;
+                	case 1: etatStr = "Validé";
+                			break;
+                	case 2: etatStr = "Annulé";
+                			break;
+                	default: etatStr = "Validé";
+                	
+                }
                 //if (date == )
                 
                 
                 //Cree l'object à mettre dans le model
-                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site};
+                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site,etatStr};
                 
                modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
@@ -188,8 +197,8 @@ public class CoursVue extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Date","Heure de début","Heure de fin","Id", "Nom du cours", "Enseignant", "Salle", "Site" }) 
-        {boolean[] canEdit = new boolean [] {false,false,false,false, true, true, false, true};
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Date","Heure de début","Heure de fin","Id", "Nom du cours", "Enseignant", "Salle", "Site" ,"Etat"}) 
+        {boolean[] canEdit = new boolean [] {false,false,false,false, true, true, false, true, false};
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
