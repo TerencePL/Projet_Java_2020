@@ -7,13 +7,17 @@ package Vue;
 
 import DAO.CoursDAO;
 import DAO.EnseignantDAO;
+import DAO.SalleDAO;
 import DAO.SeanceDAO;
 import DAO.Seance_SallesDAO;
+import DAO.SiteDAO;
 import DAO.UtilisateurDAO;
 import Modele.Cours;
 import Modele.Enseignant;
+import Modele.Salle;
 import Modele.Seance;
 import Modele.Seance_Salles;
+import Modele.Site;
 import Modele.Utilisateur;
 
 //Modele.AnneeScolaire;
@@ -79,6 +83,8 @@ public class CoursVue extends javax.swing.JFrame {
             UtilisateurDAO utilDAO = new UtilisateurDAO();
             SeanceDAO seanceDAO = new SeanceDAO();
             Seance_SallesDAO seance_salleDAO = new Seance_SallesDAO();
+            SalleDAO salleDAO = new SalleDAO();
+            SiteDAO siteDAO = new SiteDAO();
             
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
            
@@ -105,16 +111,19 @@ public class CoursVue extends javax.swing.JFrame {
                 Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
                 int id_salle = seance_salle.getId_seance();
                 
+                Salle salle = salleDAO.find(id_salle);
+                String nom_salle = salle.getNom();
+                int capacite = salle.getCapacite();
+                int id_site = salle.getId_site();
+                
+                Site site = siteDAO.find(id_site);
+                String nom_site = site.getNom();
+                            
                 //if (date == )
                 
                 
-                
-                //String niveau=classes.get(i).getNiveau().getNom();
-                //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
-                //String ecole=classes.get(i).getEcole().getNom();
-                
                 //Cree l'object à mettre dans le model
-                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,id_salle,""};
+                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site};
                 
                modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
@@ -167,29 +176,18 @@ public class CoursVue extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jButtonRetour = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        add = new javax.swing.JButton();
-        delete = new javax.swing.JButton();
-        update = new javax.swing.JButton();
-        displayStudents = new javax.swing.JButton();
-
+       
+        
+        
+            
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButtonRetour.setText("Retour");
-        jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRetourActionPerformed(evt);
-            }
-        });
-
+        jTextField1 = new javax.swing.JTextField();
         jTextField1.setText("Rechercher");
 
+        jTable1 = new javax.swing.JTable();
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Date","Heure de début","Heure de fin","Id", "Nom du cours", "Enseignant", "Salle", "Site" }) 
         {boolean[] canEdit = new boolean [] {false,false,false,false, true, true, false, true};
 
@@ -198,35 +196,25 @@ public class CoursVue extends javax.swing.JFrame {
             }
         });
         jTable1.setRowHeight(30);
+        
+        jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane1.setViewportView(jTable1);
 
+        add = new javax.swing.JButton();
         add.setText("Ajouter");
-        add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ajouterActionPerformed(evt);
-            }
-        });
-
+      
+        delete = new javax.swing.JButton();
         delete.setText("Supprimer");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //deleteActionPerformed(evt);
-            }
-        });
-
+        
+        update = new javax.swing.JButton();
         update.setText("Modifier");
-        update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //updateActionPerformed(evt);
-            }
-        });
-
+       
+        displayStudents = new javax.swing.JButton();
         displayStudents.setText("Afficher la classe");
-        displayStudents.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //displayStudentsActionPerformed(evt);
-            }
-        });
+        
+        jButtonRetour = new javax.swing.JButton();
+        jButtonRetour.setText("Retour");
+      
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -272,6 +260,40 @@ public class CoursVue extends javax.swing.JFrame {
         );
 
         pack();
+        
+        
+        
+        jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRetourActionPerformed(evt);
+            }
+        });
+        
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouterActionPerformed(evt);
+            }
+        });
+        
+        
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //deleteActionPerformed(evt);
+            }
+        });
+        
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //updateActionPerformed(evt);
+            }
+        });
+        
+        displayStudents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //displayStudentsActionPerformed(evt);
+            }
+        });
+
     }// </editor-fold>//GEN-END:initComponents
 
     

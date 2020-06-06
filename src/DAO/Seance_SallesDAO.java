@@ -145,9 +145,7 @@ public class Seance_SallesDAO extends DAO<Seance_Salles>{
             }
         } 
         catch (SQLException ex) 
-        {System.out.println("Aucune ligne affectée");}
-        
+        {System.out.println("Aucune ligne affectée");}       
         return  seance_salle;
-    }
-    
+    }  
 }
