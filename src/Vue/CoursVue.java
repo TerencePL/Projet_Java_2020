@@ -6,12 +6,23 @@
 package Vue;
 
 import DAO.CoursDAO;
+import DAO.EnseignantDAO;
+import DAO.SalleDAO;
+import DAO.SeanceDAO;
+import DAO.Seance_SallesDAO;
+import DAO.SiteDAO;
+import DAO.UtilisateurDAO;
 import Modele.Cours;
-//Modele.AnneeScolaire;
-//import Modele.Ecole;
-//import Modele.Niveau;
+import Modele.Enseignant;
+import Modele.Salle;
+import Modele.Seance;
+import Modele.Seance_Salles;
+import Modele.Site;
+import Modele.Utilisateur;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,9 +34,7 @@ import javax.swing.table.DefaultTableModel;
 
  */
 public class CoursVue extends javax.swing.JFrame {
-	
-	
-	
+
     
     static ArrayList<Cours> cours1=new ArrayList();
     static CoursDAO coursDAO;
@@ -51,32 +60,79 @@ public class CoursVue extends javax.swing.JFrame {
     public CoursVue(){
         initComponents();          
         modelCours=(DefaultTableModel) jTable1.getModel();
-        addCours=new AddCours(); //ON rÃ©cupÃ¨re tous les niveaux, annees associÃ©s.
+        addCours=new AddCours(); //On récupère les cours
         fillCours();
         
         
     }
     
     /**
-     * Remplit le tableau de classes avec celles trouvées dans la bdd, version graphique
+     * Remplit l'mploi du temps avec celles trouvées dans la bdd, version graphique
      */
     public void fillCours(){
         try {          
+        	
             coursDAO= new CoursDAO();
             
+            EnseignantDAO enseignDAO= new EnseignantDAO();
+            UtilisateurDAO utilDAO = new UtilisateurDAO();
+            SeanceDAO seanceDAO = new SeanceDAO();
+            Seance_SallesDAO seance_salleDAO = new Seance_SallesDAO();
+            SalleDAO salleDAO = new SalleDAO();
+            SiteDAO siteDAO = new SiteDAO();
+            
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
+           
             pack();
-            System.out.println("balise debug");
+            System.out.println("fillcours");
             for(int i=0;i<cours1.size();i++){
+            	
+            	String etatStr="";
+            	
                 int id=cours1.get(i).getId();
                 String nom=cours1.get(i).getNom();
                 
-                //String niveau=classes.get(i).getNiveau().getNom();
-                //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
-                //String ecole=classes.get(i).getEcole().getNom();
                 
-                //Cree l'object Ã  mettre dans le model
-                Object[]cls={"","","",id,nom,"","",""};
+                Enseignant enseign = enseignDAO.find(id);  //trouve l'enseignant associé à ce cours
+                int id_enseignant = enseign.getId_utilisateur(); //recupère l'Id_utilisateur de cet enseignant.
+                
+                Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
+                String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
+                		
+                Seance seance = seanceDAO.find(id);
+                int id_seance = seance.getId();
+                Date date = seance.getDate();
+                int heure_debut= seance.getHeure_debut();
+                int heure_fin = seance.getHeure_fin();
+                int etat = seance.getEtat();
+                
+                Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
+                int id_salle = seance_salle.getId_seance();
+                
+                Salle salle = salleDAO.find(id_salle);
+                String nom_salle = salle.getNom();
+                int capacite = salle.getCapacite();
+                int id_site = salle.getId_site();
+                
+                Site site = siteDAO.find(id_site);
+                String nom_site = site.getNom();
+                
+                
+                switch(etat){
+                	case 0: etatStr = "En cours de validation";
+                			break;
+                	case 1: etatStr = "Validé";
+                			break;
+                	case 2: etatStr = "Annulé";
+                			break;
+                	default: etatStr = "Validé";
+                	
+                }
+                //if (date == )
+                
+                
+                //Cree l'object à mettre dans le model
+                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site,etatStr};
                 
                modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
@@ -89,7 +145,7 @@ public class CoursVue extends javax.swing.JFrame {
     
     /**
      * Remplit le tableau de classes avec celles trouvées dans la bdd, version consolle
-     *
+     */
     public static void fillCours2(){
         try {          
             coursDAO= new CoursDAO();
@@ -118,7 +174,7 @@ public class CoursVue extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
         	System.out.println( "Il semblerait qu'une erreur soit survenue.");
         }
-    }*/
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -129,66 +185,45 @@ public class CoursVue extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jButtonRetour = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        add = new javax.swing.JButton();
-        delete = new javax.swing.JButton();
-        update = new javax.swing.JButton();
-        displayStudents = new javax.swing.JButton();
-
+       
+        
+        
+            
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButtonRetour.setText("Retour");
-        jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRetourActionPerformed(evt);
-            }
-        });
-
+        jTextField1 = new javax.swing.JTextField();
         jTextField1.setText("Rechercher");
 
+        jTable1 = new javax.swing.JTable();
         jTable1.setAutoCreateRowSorter(true);
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Date","Heure de début","Heure de fin","Id", "Nom du cours", "Enseignant", "Salle", "Site" }) 
-        {boolean[] canEdit = new boolean [] {false,false,false,false, true, true, false, true};
+        jTable1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Date","Heure de début","Heure de fin","Id", "Nom du cours", "Enseignant", "Salle", "Site" ,"Etat"}) 
+        {boolean[] canEdit = new boolean [] {false,false,false,false, true, true, false, true, false};
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
         jTable1.setRowHeight(30);
+        
+        jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane1.setViewportView(jTable1);
 
+        add = new javax.swing.JButton();
         add.setText("Ajouter");
-        add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ajouterActionPerformed(evt);
-            }
-        });
-
+      
+        delete = new javax.swing.JButton();
         delete.setText("Supprimer");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //deleteActionPerformed(evt);
-            }
-        });
-
+        
+        update = new javax.swing.JButton();
         update.setText("Modifier");
-        update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //updateActionPerformed(evt);
-            }
-        });
-
+       
+        displayStudents = new javax.swing.JButton();
         displayStudents.setText("Afficher la classe");
-        displayStudents.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //displayStudentsActionPerformed(evt);
-            }
-        });
+        
+        jButtonRetour = new javax.swing.JButton();
+        jButtonRetour.setText("Retour");
+      
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,6 +269,40 @@ public class CoursVue extends javax.swing.JFrame {
         );
 
         pack();
+        
+        
+        
+        jButtonRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRetourActionPerformed(evt);
+            }
+        });
+        
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouterActionPerformed(evt);
+            }
+        });
+        
+        
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+        
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //updateActionPerformed(evt);
+            }
+        });
+        
+        displayStudents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //displayStudentsActionPerformed(evt);
+            }
+        });
+
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -290,20 +359,22 @@ public class CoursVue extends javax.swing.JFrame {
     //Ajouter un cours
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         // TODO add your handling code here:
-        //addCours.setVisible(true);
-        addCours.ajout("testbis");
+    	AddCours addcours = new AddCours();
+        addcours.setVisible(true);
+        
+        //addCours.ajout("testbis");
         dispose(); //ferme et réouvre la page ce qui actualise la table
         CoursVue cours1=new CoursVue();
         cours1.setVisible(true);
     }//GEN-LAST:event_ajouterActionPerformed
     
-    /*
-    //Supprimer une classe
+    
+    //Supprimer un cours
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
          try {
              
             if(jTable1.getSelectedRow()==-1){//Si aucune ligne est selectionnee
-                if(modelClass.getRowCount()==0){
+                if(modelCours.getRowCount()==0){
                     JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");                  
                 }
                 else{
@@ -314,26 +385,27 @@ public class CoursVue extends javax.swing.JFrame {
             else{
                 
                 // TODO add your handling code here:
-                classeDAO=new ClasseDAO();
-                classe=new Classe();
+               
+                cours=new Cours();
+                coursDAO=new CoursDAO();
 
                 int currentRow=jTable1.getSelectedRow();
 
-                int id=(int) modelClass.getValueAt(currentRow,0);//RÃ©cupÃ¨rer l'id de la case sÃ©lectionnÃ©e
+                int id=(int) modelCours.getValueAt(currentRow,3);//Récupère l'Id de la ligne selectionné
                 
                 System.out.println(id);
-                classe=classeDAO.find(id); //Trouver la personne dans la bdd avec l'id
+                cours=coursDAO.find(id); //Trouver la personne dans la bdd avec l'id
 
                 
                 //Demande de confirmation
-                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+classe.getNom()+" "+classe.getNiveau().getNom()+" ?");
+                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+cours.getNom()+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
-                    classeDAO.delete(classe); //Enlever de la bdd
-                    modelClass.removeRow(currentRow); 
+                    coursDAO.delete(cours); //Enlever de la bdd
+                    coursDAO.deleteId(id); //Enlever de la bdd
+                    modelCours.removeRow(currentRow); 
                     
-                    classes=classeDAO.all(); //On remet Ã  jour l'arraylist de classes
-                    JOptionPane.showConfirmDialog(null, "La classe "+classe.getNom()+" "+classe.getNiveau().getNom()+" a Ã©tÃ© supprimÃ©.");
-                    
+                    cours1=coursDAO.all(); //On remet Ã  jour l'arraylist 
+                    JOptionPane.showConfirmDialog(null, "Le cours"+cours.getNom()+" a été supprimé.");             
                 }
 
             }
@@ -343,7 +415,7 @@ public class CoursVue extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Une erreur est survenue");
         }
     }//GEN-LAST:event_deleteActionPerformed
-*/
+
     
     
     

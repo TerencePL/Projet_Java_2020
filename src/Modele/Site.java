@@ -14,14 +14,14 @@ public class Site {
         nom = "";     
     }
 
-    //constructeur surchargé
+    //constructeur
     public Site(int id,String nom) {
         this.id = id;
         this.nom = nom;
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id:" + id);

@@ -14,14 +14,14 @@ public class Enseignant {
         id_cours=0;      
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Enseignant(int id_utilisateur, int id_cours) {
         this.id_utilisateur = id_utilisateur;
         this.id_cours = id_cours;
     }
     
     /**
-     *Afficher un cours
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id_utilisateur:" + id_utilisateur);

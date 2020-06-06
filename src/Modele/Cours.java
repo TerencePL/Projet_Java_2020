@@ -14,14 +14,14 @@ public class Cours {
         nom=null;      
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Cours(int id, String nom) {
         this.id = id;
         this.nom = nom;
     }
     
     /**
-     *Afficher un cours
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id:" + id);

@@ -14,14 +14,14 @@ public class Promotion {
         nom="";      
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Promotion(int id,String nom) {
         this.id = id;
         this.nom = nom;
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id:" + id);

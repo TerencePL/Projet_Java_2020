@@ -17,7 +17,7 @@ public class Salle {
         id_site=0;      
     }
 
-    //constructeur surchargé
+    //constructeur
     public Salle(int id,String nom,int capacite, int id_site) {
         this.id = id;
         this.nom = nom;
@@ -26,7 +26,7 @@ public class Salle {
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id:" + id);

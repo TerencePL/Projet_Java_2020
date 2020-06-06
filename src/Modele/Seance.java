@@ -26,7 +26,7 @@ public class Seance {
         id_type = 0;   
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Seance(int id,int semaine,Date date,int heure_debut, int heure_fin,int etat,int id_cours,int id_type) {
     	this.id = id;
     	this.semaine = semaine;
@@ -39,7 +39,7 @@ public class Seance {
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id:" + id);
