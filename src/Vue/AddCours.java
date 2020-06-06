@@ -14,10 +14,6 @@ import javax.swing.JOptionPane;
 
 public class AddCours {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//createActionPerformed();
-	}
 
     //Ajout d'une classe
     private static void createActionPerformed() {//GEN-FIRST:event_createActionPerformed
@@ -74,9 +70,7 @@ public class AddCours {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+               
         
     }//GEN-LAST:event_createActionPerformed
     

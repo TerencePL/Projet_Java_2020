@@ -16,7 +16,7 @@ public class Groupe {
         id_groupe=0;      
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Groupe(int id,String nom, int id_groupe) {
         this.id = id;
         this.nom = nom;
@@ -24,7 +24,7 @@ public class Groupe {
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console 
      */
     public void afficher(){
         System.out.println("Id:" + id);

@@ -20,7 +20,7 @@ public class Seance_Groupes {
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id_seance:" + id_seance);

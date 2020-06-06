@@ -17,7 +17,7 @@ public class Etudiant {
         id_groupe=0;      
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Etudiant(int id_utilisateur,int numero, int id_groupe) {
         this.id_utilisateur = id_utilisateur;
         this.numero = numero;
@@ -25,7 +25,7 @@ public class Etudiant {
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console 
      */
     public void afficher(){
         System.out.println("Id_utilisateur:" + id_utilisateur);

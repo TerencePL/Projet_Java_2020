@@ -13,14 +13,14 @@ public class Seance_Enseignant {
         id_enseignant = 0;     
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Seance_Enseignant(int id_enseignant,int id_seance) {
         this.id_enseignant = id_enseignant;
         this.id_seance = id_seance;
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id_enseignant:" + id_enseignant);

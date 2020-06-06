@@ -14,14 +14,14 @@ public class Type_Cours {
         nom = "";     
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Type_Cours(int id,String nom) {
         this.id = id;
         this.nom = nom;
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console
      */
     public void afficher(){
         System.out.println("Id:" + id);

@@ -54,7 +54,7 @@ public class CoursDAO extends DAO<Cours>{
         
         
         try {
-            Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);            
+            Statement stmt=con.createStatement();            
             rs=stmt.executeQuery("SELECT * FROM cours WHERE id="+id);
             
             if(rs.next()){

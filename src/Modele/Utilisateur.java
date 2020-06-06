@@ -22,7 +22,7 @@ public class Utilisateur {
         droit =0;
     }
 
-    //constructeur surchargé
+    //constructeur 
     public Utilisateur(int id,String email,String passwd,String nom,String prenom,int droit) {
         this.id = id;
         this.email = email;
@@ -33,7 +33,7 @@ public class Utilisateur {
     }
     
     /**
-     *Afficher 
+     *Afficher dans le console 
      */
     public void afficher(){
         System.out.println("Id:" + id);

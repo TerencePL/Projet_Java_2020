@@ -42,7 +42,7 @@ public class Connexion {
               
               if(con!=null){
               	
-                  System.out.println("Connexion ра la base "+bdd+" OK");                     
+                  System.out.println("Connexion ра la base "+bdd);                     
               } 
               else{
               	
