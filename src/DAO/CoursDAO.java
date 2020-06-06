@@ -155,7 +155,7 @@ public class CoursDAO extends DAO<Cours>{
                 
             }
         } catch (SQLException ex) {
-            System.out.println("Aucune ligne affectÃ©e");
+            System.out.println("Aucune ligne affectée");
         }
         
         return cours;

@@ -142,7 +142,7 @@ public class EnseignantDAO extends DAO<Enseignant>{
         
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rss=stmt.executeUpdate("UPDATE enseign SET id_utilisateur='"+enseign.getId_utilisateur()+"' WHERE id= "+enseign.getId_utilisateur());
+            rss=stmt.executeUpdate("UPDATE enseignant SET id_utilisateur='"+enseign.getId_utilisateur()+"' WHERE id= "+enseign.getId_utilisateur());
             
             if(rss!=0){
                 enseign=this.find(enseign.getId_utilisateur());

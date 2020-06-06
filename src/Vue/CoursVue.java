@@ -6,7 +6,12 @@
 package Vue;
 
 import DAO.CoursDAO;
+import DAO.EnseignantDAO;
+import DAO.UtilisateurDAO;
 import Modele.Cours;
+import Modele.Enseignant;
+import Modele.Utilisateur;
+
 //Modele.AnneeScolaire;
 //import Modele.Ecole;
 //import Modele.Niveau;
@@ -51,7 +56,7 @@ public class CoursVue extends javax.swing.JFrame {
     public CoursVue(){
         initComponents();          
         modelCours=(DefaultTableModel) jTable1.getModel();
-        addCours=new AddCours(); //ON rÃ©cupÃ¨re tous les niveaux, annees associÃ©s.
+        addCours=new AddCours(); //On récupère les cours
         fillCours();
         
         
@@ -62,21 +67,34 @@ public class CoursVue extends javax.swing.JFrame {
      */
     public void fillCours(){
         try {          
+        	
             coursDAO= new CoursDAO();
             
+            EnseignantDAO enseignDAO= new EnseignantDAO();
+            UtilisateurDAO utilDAO = new UtilisateurDAO();
+            
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
+           
             pack();
-            System.out.println("balise debug");
+            System.out.println("fillcours");
             for(int i=0;i<cours1.size();i++){
+            	
                 int id=cours1.get(i).getId();
                 String nom=cours1.get(i).getNom();
                 
+                
+                Enseignant enseign = enseignDAO.find(id);  //trouve l'enseignant associé à ce cours
+                int id_enseignant = enseign.getId_utilisateur(); //recupère l'Id_utilisateur de cet enseignant.
+                
+                Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
+                String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
+                		
                 //String niveau=classes.get(i).getNiveau().getNom();
                 //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
                 //String ecole=classes.get(i).getEcole().getNom();
                 
                 //Cree l'object Ã  mettre dans le model
-                Object[]cls={"","","",id,nom,"","",""};
+                Object[]cls={"","","",id,nom,nom_enseignant,"",""};
                 
                modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
