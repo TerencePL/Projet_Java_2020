@@ -8,10 +8,12 @@ package Vue;
 import DAO.CoursDAO;
 import DAO.EnseignantDAO;
 import DAO.SeanceDAO;
+import DAO.Seance_SallesDAO;
 import DAO.UtilisateurDAO;
 import Modele.Cours;
 import Modele.Enseignant;
 import Modele.Seance;
+import Modele.Seance_Salles;
 import Modele.Utilisateur;
 
 //Modele.AnneeScolaire;
@@ -66,7 +68,7 @@ public class CoursVue extends javax.swing.JFrame {
     }
     
     /**
-     * Remplit le tableau de classes avec celles trouvées dans la bdd, version graphique
+     * Remplit l'mploi du temps avec celles trouvées dans la bdd, version graphique
      */
     public void fillCours(){
         try {          
@@ -76,6 +78,7 @@ public class CoursVue extends javax.swing.JFrame {
             EnseignantDAO enseignDAO= new EnseignantDAO();
             UtilisateurDAO utilDAO = new UtilisateurDAO();
             SeanceDAO seanceDAO = new SeanceDAO();
+            Seance_SallesDAO seance_salleDAO = new Seance_SallesDAO();
             
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
            
@@ -94,11 +97,15 @@ public class CoursVue extends javax.swing.JFrame {
                 String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
                 		
                 Seance seance = seanceDAO.find(id);
+                int id_seance = seance.getId();
                 Date date = seance.getDate();
                 int heure_debut= seance.getHeure_debut();
                 int heure_fin = seance.getHeure_fin();
                 
+                Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
+                int id_salle = seance_salle.getId_seance();
                 
+                //if (date == )
                 
                 
                 
@@ -106,8 +113,8 @@ public class CoursVue extends javax.swing.JFrame {
                 //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
                 //String ecole=classes.get(i).getEcole().getNom();
                 
-                //Cree l'object Ã  mettre dans le model
-                Object[]cls={"","","",id,nom,nom_enseignant,"",""};
+                //Cree l'object à mettre dans le model
+                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,id_salle,""};
                 
                modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
