@@ -7,9 +7,11 @@ package Vue;
 
 import DAO.CoursDAO;
 import DAO.EnseignantDAO;
+import DAO.SeanceDAO;
 import DAO.UtilisateurDAO;
 import Modele.Cours;
 import Modele.Enseignant;
+import Modele.Seance;
 import Modele.Utilisateur;
 
 //Modele.AnneeScolaire;
@@ -17,6 +19,7 @@ import Modele.Utilisateur;
 //import Modele.Niveau;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -72,6 +75,7 @@ public class CoursVue extends javax.swing.JFrame {
             
             EnseignantDAO enseignDAO= new EnseignantDAO();
             UtilisateurDAO utilDAO = new UtilisateurDAO();
+            SeanceDAO seanceDAO = new SeanceDAO();
             
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
            
@@ -89,6 +93,15 @@ public class CoursVue extends javax.swing.JFrame {
                 Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
                 String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
                 		
+                Seance seance = seanceDAO.find(id);
+                Date date = seance.getDate();
+                int heure_debut= seance.getHeure_debut();
+                int heure_fin = seance.getHeure_fin();
+                
+                
+                
+                
+                
                 //String niveau=classes.get(i).getNiveau().getNom();
                 //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
                 //String ecole=classes.get(i).getEcole().getNom();
@@ -107,7 +120,7 @@ public class CoursVue extends javax.swing.JFrame {
     
     /**
      * Remplit le tableau de classes avec celles trouvées dans la bdd, version consolle
-     *
+     */
     public static void fillCours2(){
         try {          
             coursDAO= new CoursDAO();
@@ -136,7 +149,7 @@ public class CoursVue extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
         	System.out.println( "Il semblerait qu'une erreur soit survenue.");
         }
-    }*/
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

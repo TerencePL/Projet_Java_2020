@@ -50,14 +50,11 @@ public class SeanceDAO extends DAO<Seance>{
         return all;
     }
 
-  //Retourne l'enseignant dont l'ID correspond à l'ID DU COURS!
+  //Return la séance dont l'Id correspond à l'Id
     @Override
     public Seance find(int id) { 
         Seance seance = new Seance();
-        //Trimestre trimestre=new Trimestre();
-        //Inscription inscription=new Inscription();
-        
-        
+       
         try {
             Statement stmt=con.createStatement();            
             rs=stmt.executeQuery("SELECT * FROM seance WHERE id="+id);
@@ -105,44 +102,46 @@ public class SeanceDAO extends DAO<Seance>{
         	 
             stmt = con.createStatement();
             PreparedStatement prepare=con.prepareStatement("INSERT INTO seance (id,email,passwd,nom,prenom,droit) VALUES ("+id+","+semaine+","+date+","+date+","+heure_debut+","+heure_fin+","+etat+","+id_cours+","+id_type+")");
-                   
+            
+            /*
             prepare.setInt(1,id);
             prepare.setString(2,email);
             prepare.setString(3,passwd);
             prepare.setString(4,nom);
             prepare.setString(5,prenom);
             prepare.setInt(6, droit);
+            */
             
             prepare.executeUpdate();
             
             if(prepare!=null){
-                System.out.println("Utilisateurs ajouté dans la base de données.");
+                System.out.println("S&ance ajouté dans la base de données.");
                 
                 //recuperer l'id auto-incrémenté par la BDD
-                rs=stmt.executeQuery("SELECT id FROM utilisateur WHERE id="+id); //+" AND id_inscription="+id_inscription
+                rs=stmt.executeQuery("SELECT id FROM seance WHERE id="+id); //+" AND id_inscription="+id_inscription
                 if(rs.first()){
                     int id1=rs.getInt("id");                
-                    util.setId(id1);
+                    seance.setId(id1);
                 }                
             }else{
                 throw new SQLException();
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeanceDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return util;
+        return seance;
         
     }
 
     @Override
-    public void delete(Utilisateur util) {
+    public void delete(Seance seance) {
         try {
             stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rs=stmt.executeQuery("DELETE utilisateur WHERE id="+util.getId());
+            rs=stmt.executeQuery("DELETE seance WHERE id="+seance.getId());
             
             if(rs.first()){
-                System.out.println("L'utilisateur numéro "+ util.getId()+util+"a été supprimé.");
+                System.out.println("L'utilisateur numéro "+ seance.getId()+seance+"a été supprimé.");
             }
             else
                 throw new SQLException();
@@ -152,21 +151,21 @@ public class SeanceDAO extends DAO<Seance>{
     }
 
     @Override //One ne modifie que l'ID utilisateur
-    public Utilisateur update(Utilisateur util) {
+    public Seance update(Seance seance) {
         
         try {
             Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rss=stmt.executeUpdate("UPDATE utilisateur SET id='"+util.getId()+"' WHERE id= "+util.getId());
+            rss=stmt.executeUpdate("UPDATE seance SET id='"+seance.getId()+"' WHERE id= "+seance.getId());
             
             if(rss!=0){
-                util=this.find(util.getId());
+                seance=this.find(seance.getId());
                 
             }
-        } catch (SQLException ex) {
-            System.out.println("Aucune ligne affectée");
-        }
+        } 
+        catch (SQLException ex) 
+        {System.out.println("Aucune ligne affectée");}
         
-        return util;
+        return  seance;
     }
     
 }

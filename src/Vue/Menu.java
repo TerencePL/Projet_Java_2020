@@ -11,10 +11,6 @@ import javax.swing.JOptionPane;
 
 import Modele.Cours;
 
-/**
- *Le menu principal permet d'afficher des classes, des élèves, des enseignants ou des statistiques
- * @author kevin
- */
 
 public class Menu extends javax.swing.JFrame {
 
@@ -34,55 +30,32 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void Start() {
 
-        jLabel1 = new javax.swing.JLabel();
-        cours = new javax.swing.JButton();
-        classes = new javax.swing.JButton();
-        enseignants = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        reporting = new javax.swing.JButton();
+    
         quitter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        
+        jLabel1 = new javax.swing.JLabel();
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLabel1.setText("Apllication emploi du temps");
 
-        cours.setText("Emploi du temps");
-        cours.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coursActionPerformed(evt);
-            }
-        });
-
-        classes.setText("Classes");
-        classes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //classesActionPerformed(evt);
-            }
-        });
-
-        enseignants.setText("Enseignants");
-        enseignants.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //enseignantsActionPerformed(evt);
-            }
-        });
-
+        jLabel2 = new javax.swing.JLabel();
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vue/ece_logo.jpg"))); // NOI18N
-
-        reporting.setText("Statistiques");
-        reporting.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //reportingActionPerformed(evt);
-            }
-        });
+      
+        cours = new javax.swing.JButton();
+        cours.setText("Emploi du temps"); 
+        
+        classes = new javax.swing.JButton();
+        classes.setText("Classes");
+        
+        enseignants = new javax.swing.JButton();
+        enseignants.setText("Enseignants"); 
+        
+        reporting = new javax.swing.JButton();
+        reporting.setText("Statistiques");  
         
         quitter.setText("Quitter");
-        quitter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quitterActionPerformed(evt);
-            }
-        });
+        
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,6 +99,37 @@ public class Menu extends javax.swing.JFrame {
         );
 
         pack();
+        
+        
+        cours.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) 
+            {coursActionPerformed(evt);}
+        });
+        
+        classes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //classesActionPerformed(evt);
+            }
+        });
+        
+        enseignants.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //enseignantsActionPerformed(evt);
+            }
+        });
+        
+        reporting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //reportingActionPerformed(evt);
+            }
+        });
+        
+        quitter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {quitterActionPerformed(evt);}
+        });
+        
+        
     }// </editor-fold>//GEN-END:initComponents
 
     

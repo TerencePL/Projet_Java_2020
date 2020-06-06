@@ -37,7 +37,9 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
                 
             }
             
-        } catch (SQLException ex) {
+        } catch (SQLException ex) 
+        {
+        	System.out.print(ex);
             Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, ex); //Logger.getLogger(ClasseDAO.class.getName())  <= ClasseDA0, pas bulletinDAO (pk?)
         }
         
