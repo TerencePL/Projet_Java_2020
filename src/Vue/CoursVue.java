@@ -287,7 +287,7 @@ public class CoursVue extends javax.swing.JFrame {
         
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //deleteActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
         
@@ -359,20 +359,22 @@ public class CoursVue extends javax.swing.JFrame {
     //Ajouter un cours
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         // TODO add your handling code here:
-        //addCours.setVisible(true);
-        addCours.ajout("testbis");
+    	AddCours addcours = new AddCours();
+        addcours.setVisible(true);
+        
+        //addCours.ajout("testbis");
         dispose(); //ferme et réouvre la page ce qui actualise la table
         CoursVue cours1=new CoursVue();
         cours1.setVisible(true);
     }//GEN-LAST:event_ajouterActionPerformed
     
-    /*
-    //Supprimer une classe
+    
+    //Supprimer un cours
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
          try {
              
             if(jTable1.getSelectedRow()==-1){//Si aucune ligne est selectionnee
-                if(modelClass.getRowCount()==0){
+                if(modelCours.getRowCount()==0){
                     JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");                  
                 }
                 else{
@@ -383,26 +385,27 @@ public class CoursVue extends javax.swing.JFrame {
             else{
                 
                 // TODO add your handling code here:
-                classeDAO=new ClasseDAO();
-                classe=new Classe();
+               
+                cours=new Cours();
+                coursDAO=new CoursDAO();
 
                 int currentRow=jTable1.getSelectedRow();
 
-                int id=(int) modelClass.getValueAt(currentRow,0);//RÃ©cupÃ¨rer l'id de la case sÃ©lectionnÃ©e
+                int id=(int) modelCours.getValueAt(currentRow,3);//Récupère l'Id de la ligne selectionné
                 
                 System.out.println(id);
-                classe=classeDAO.find(id); //Trouver la personne dans la bdd avec l'id
+                cours=coursDAO.find(id); //Trouver la personne dans la bdd avec l'id
 
                 
                 //Demande de confirmation
-                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+classe.getNom()+" "+classe.getNiveau().getNom()+" ?");
+                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+cours.getNom()+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
-                    classeDAO.delete(classe); //Enlever de la bdd
-                    modelClass.removeRow(currentRow); 
+                    coursDAO.delete(cours); //Enlever de la bdd
+                    coursDAO.deleteId(id); //Enlever de la bdd
+                    modelCours.removeRow(currentRow); 
                     
-                    classes=classeDAO.all(); //On remet Ã  jour l'arraylist de classes
-                    JOptionPane.showConfirmDialog(null, "La classe "+classe.getNom()+" "+classe.getNiveau().getNom()+" a Ã©tÃ© supprimÃ©.");
-                    
+                    cours1=coursDAO.all(); //On remet Ã  jour l'arraylist 
+                    JOptionPane.showConfirmDialog(null, "Le cours"+cours.getNom()+" a été supprimé.");             
                 }
 
             }
@@ -412,7 +415,7 @@ public class CoursVue extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Une erreur est survenue");
         }
     }//GEN-LAST:event_deleteActionPerformed
-*/
+
     
     
     

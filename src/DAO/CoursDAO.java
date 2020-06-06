@@ -130,11 +130,32 @@ public class CoursDAO extends DAO<Cours>{
     @Override
     public void delete(Cours cours) {
         try {
+        	Statement stmt;
+        	System.out.println("Suppression Cours");
+            stmt=con.createStatement();
+            //rs=stmt.executeQuery("DELETE cours WHERE id="+cours.getId());
+            
+            PreparedStatement prepare=con.prepareStatement("DELETE cours WHERE id="+cours.getId());
+            prepare.executeUpdate();
+            
+            /*if(rs.first()){
+                System.out.println("Le cours numéro "+cours.getId()+cours+"a été supprimé.");
+            }
+            else
+                throw new SQLException(); */
+        } catch (SQLException ex) {
+            Logger.getLogger(CoursDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deleteId(int id) {
+        try {
+        	System.out.println("suppression CoursID");
             stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            rs=stmt.executeQuery("DELETE cours WHERE id="+cours.getId());
+            rs=stmt.executeQuery("DELETE cours WHERE id="+id);
             
             if(rs.first()){
-                System.out.println("Le cours numéro "+cours.getId()+cours+"a été supprimé.");
+                System.out.println("Le cours numéro "+id+"a été supprimé.");
             }
             else
                 throw new SQLException();
@@ -142,6 +163,7 @@ public class CoursDAO extends DAO<Cours>{
             Logger.getLogger(CoursDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     @Override //One ne modifie que l'apprÃ©ciation!!
     public Cours update(Cours cours) {
