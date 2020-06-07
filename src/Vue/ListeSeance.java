@@ -1,5 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
+/* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -30,10 +29,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *Affiche la liste de toutes les classes
-
+ *Affiche la liste de toutes les séances associées à un enseignant
+ *
  */
-public class CoursVue extends javax.swing.JFrame {
+public class ListeSeance extends javax.swing.JFrame {
 
     
     static ArrayList<Cours> cours1=new ArrayList();
@@ -41,6 +40,7 @@ public class CoursVue extends javax.swing.JFrame {
     static Cours cours =new Cours();
     AddCours addCours=new AddCours();
     
+    static ArrayList<Enseignant> enseign1=new ArrayList();
     static ArrayList<Seance> seance1=new ArrayList();
     
     //static ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
@@ -48,34 +48,30 @@ public class CoursVue extends javax.swing.JFrame {
     
     static DefaultTableModel modelCours;
 
-    
-    
-    
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//fillCours2();
-	}
-	
+   
     /**
-     * Creates new form Classes
+     * Creates new form 
      */
-    public CoursVue(){
+    public ListeSeance(int id){
+    	
+    	
         initComponents();          
         modelCours=(DefaultTableModel) jTable1.getModel();
         addCours=new AddCours(); //On récupère les cours
-        fillCours();
+        fillSeance(id);
         
         
     }
     
     /**
      * Remplit l'mploi du temps avec celles trouvées dans la bdd, version graphique
+     * @param idFind
      */
-    public void fillCours(){
-        try {          
-        	
-            coursDAO= new CoursDAO();
-            
+    public void fillSeance(int idFind){
+        try { 	
+        	System.out.println("Liste seance id:"+idFind);
+            coursDAO= new CoursDAO();            
+          
             EnseignantDAO enseignDAO= new EnseignantDAO();
             UtilisateurDAO utilDAO = new UtilisateurDAO();
             SeanceDAO seanceDAO = new SeanceDAO();
@@ -84,7 +80,93 @@ public class CoursVue extends javax.swing.JFrame {
             SiteDAO siteDAO = new SiteDAO();
             
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
-            seance1=seanceDAO.all();
+            enseign1=enseignDAO.all();
+            seance1 = seanceDAO.all();
+              
+           
+            pack();
+            
+          
+
+            
+            //for(int i=0;i<enseign1.size();i++){
+            //	int id_enseignant = enseign1.get(i).getId_utilisateur();
+            //	int id_cours = enseign1.get(i).getId_cours(); 
+           	//Id_cours de l'enseignant
+            	
+            int id_cours=enseign1.get(idFind-1).getId_cours();
+            int id_enseignant = enseign1.get(idFind-1).getId_utilisateur();
+            
+            	for(int j=0;j<seance1.size();j++) {
+            		
+            		int id_coursseance= seance1.get(j).getId_cours(); //Id_cours de la séance
+                    int id_seance = seance1.get(j).getId();
+                    Date date = seance1.get(j).getDate();
+                    int heure_debut= seance1.get(j).getHeure_debut();
+                    int heure_fin = seance1.get(j).getHeure_fin();
+                    int etat = seance1.get(j).getEtat();
+                    System.out.println(id_cours);
+                    if(id_cours == id_coursseance) {
+                    	//System.out.println(Id_cours);
+                    	
+                    	String etatStr="";
+                    	Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
+                        String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
+                        
+                        cours= coursDAO.find(id_cours);
+                        String nom = cours.getNom();
+                        
+                        Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
+                        int id_salle = seance_salle.getId_salle();
+                        
+                        Salle salle = salleDAO.find(id_salle);
+                        String nom_salle = salle.getNom();
+                        int capacite = salle.getCapacite();
+                        int id_site = salle.getId_site();
+                        
+                        Site site = siteDAO.find(id_site);
+                        String nom_site = site.getNom();
+
+                        switch(etat){
+                        	case 0: etatStr = "En cours de validation";
+                        			break;
+                        	case 1: etatStr = "Validé";
+                        			break;
+                        	case 2: etatStr = "Annulé";
+                        			break;
+                        	default: etatStr = "Validé";
+                        }
+                        
+                      //Cree l'object à mettre dans le model
+                        Object[]cls={date,heure_debut,heure_fin,id_cours,nom,nom_enseignant,nom_salle,nom_site,etatStr}; 
+                        modelCours.insertRow(modelCours.getRowCount(), cls);   
+  	
+                    }
+            	
+               
+                
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        }
+    }
+    
+    public void fillSeance2(int idFind){
+        try { 
+        	
+        	
+        	System.out.println("Liste seance id:"+idFind);
+            coursDAO= new CoursDAO();
+            cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
+            
+            EnseignantDAO enseignDAO= new EnseignantDAO();
+            UtilisateurDAO utilDAO = new UtilisateurDAO();
+            SeanceDAO seanceDAO = new SeanceDAO();
+            Seance_SallesDAO seance_salleDAO = new Seance_SallesDAO();
+            SalleDAO salleDAO = new SalleDAO();
+            SiteDAO siteDAO = new SiteDAO();
+            
+            
            
             pack();
             System.out.println("fillcours");
@@ -101,96 +183,51 @@ public class CoursVue extends javax.swing.JFrame {
                 
                 Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
                 String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
-                	
-                for(int j=0;j<seance1.size();j++) {
-                	/*
-	                Seance seance = seanceDAO.findId_Cours(id);
-	                int id_seance = seance.getId();
-	                Date date = seance.getDate();
-	                int heure_debut= seance.getHeure_debut();
-	                int heure_fin = seance.getHeure_fin();
-	                int etat = seance.getEtat();
-	                */
-                	
-	                int id_coursseance= seance1.get(j).getId_cours(); //Id_cours de la séance
-                    int id_seance = seance1.get(j).getId();
-                    Date date = seance1.get(j).getDate();
-                    int heure_debut= seance1.get(j).getHeure_debut();
-                    int heure_fin = seance1.get(j).getHeure_fin();
-                    int etat = seance1.get(j).getEtat();
-	                
-	                
-	                
-	                Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
-	                int id_salle = seance_salle.getId_salle();
-	                
-	                Salle salle = salleDAO.find(id_salle);
-	                String nom_salle = salle.getNom();
-	                int capacite = salle.getCapacite();
-	                int id_site = salle.getId_site();
-	                
-	                Site site = siteDAO.find(id_site);
-	                String nom_site = site.getNom();
-	                
-	                
-	                switch(etat){
-	                	case 0: etatStr = "En cours de validation";
-	                			break;
-	                	case 1: etatStr = "Validé";
-	                			break;
-	                	case 2: etatStr = "Annulé";
-	                			break;
-	                	default: etatStr = "Validé";
-	                	
-	                }
-	                //if (date == )
-	                
-	                if(id_coursseance == id) {
-			                //Cree l'object à mettre dans le model
-			                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site,etatStr};
-			                
-			               modelCours.insertRow(modelCours.getRowCount(), cls);
-			               }
-	             }
+                		
+                Seance seance = seanceDAO.findId_Cours(id);
+                int id_seance = seance.getId();
+                Date date = seance.getDate();
+                int heure_debut= seance.getHeure_debut();
+                int heure_fin = seance.getHeure_fin();
+                int etat = seance.getEtat();
                 
+                
+                
+                Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
+                int id_salle = seance_salle.getId_salle();
+                
+                Salle salle = salleDAO.find(id_salle);
+                String nom_salle = salle.getNom();
+                int capacite = salle.getCapacite();
+                int id_site = salle.getId_site();
+                
+                Site site = siteDAO.find(id_site);
+                String nom_site = site.getNom();
+                
+                
+                switch(etat){
+                	case 0: etatStr = "En cours de validation";
+                			break;
+                	case 1: etatStr = "Validé";
+                			break;
+                	case 2: etatStr = "Annulé";
+                			break;
+                	default: etatStr = "Validé";
+                	
+                }
+                //if (date == )
+                
+                
+                //Cree l'object à mettre dans le model
+                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site,etatStr};
+                
+                
+                modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
                 
             }
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
-        }
-    }
-    
-    /**
-     * Remplit le tableau de classes avec celles trouvées dans la bdd, version consolle
-     */
-    public static void fillCours2(){
-        try {          
-            coursDAO= new CoursDAO();
-            
-            cours1=coursDAO.all(); //On rÃ©cupÃ¨re toutes les lignes de la table classe
-            
-            System.out.println("balise debug2");
-            for(int i=0;i<cours1.size();i++){
-                int id=cours1.get(i).getId();
-                String nom=cours1.get(i).getNom();
-                
-                //String niveau=classes.get(i).getNiveau().getNom();
-                //int annee=classes.get(i).getAnnee().getId_anneeScolaire();
-                //String ecole=classes.get(i).getEcole().getNom();
-                
-                //Cree l'object Ã  mettre dans le model
-                Object[]cls={id,nom};
-                
-                //System.out.println(""+nom);
-                //modelCours.insertRow(modelCours.getRowCount(), cls);                
-                cours1.get(i).afficher();
-                
-                
-                
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-        	System.out.println( "Il semblerait qu'une erreur soit survenue.");
         }
     }
 
@@ -367,8 +404,6 @@ public class CoursVue extends javax.swing.JFrame {
     //Retour
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
         // TODO add your handling code here:
-        Menu menu=new Menu();
-        menu.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
@@ -382,7 +417,7 @@ public class CoursVue extends javax.swing.JFrame {
         
         //addCours.ajout("testbis");
         dispose(); //ferme et réouvre la page ce qui actualise la table
-        CoursVue cours1=new CoursVue();
+        ListeSeance cours1=new ListeSeance(1);
         cours1.setVisible(true);
     }//GEN-LAST:event_ajouterActionPerformed
     
