@@ -133,7 +133,29 @@ public class EnseignantDAO extends DAO<Enseignant>{
             else
                 throw new SQLException();
         } catch (SQLException ex) {
-            Logger.getLogger(CoursDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EnseignantDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void deleteId(int id) {
+        try {
+        	System.out.println("suppression Enseignant ID");
+        	//Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            //rs=stmt.executeQuery("DELETE FROM `cours` WHERE id=15");
+            
+        	 Statement stmt = con.createStatement();
+             PreparedStatement prepare=con.prepareStatement("DELETE FROM `enseignant` WHERE id_utilisateur="+id);
+             prepare.executeUpdate();
+        	
+            
+            if(rs.first()){
+                System.out.println("L'enseignant numéro "+id+"a été supprimé.");
+            }
+            else
+                throw new SQLException();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnseignantDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -369,10 +369,7 @@ public class ListeCours extends javax.swing.JFrame {
                     cours1=coursDAO.all(); //On remet à jour l'arraylist 
                     JOptionPane.showMessageDialog(null, "Le cours "+cours.getNom()+" a �t� supprim�.");             
                 }
-
-            }
-            
-            
+            }         
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Une erreur est survenue");
         }
@@ -383,30 +380,20 @@ public class ListeCours extends javax.swing.JFrame {
     
     /**
      *Instancie et retourne une classe en selectionnant sa ligne dans le tableau
-     *
-    public Classe selectClass(){
+     */
+    public Cours selectCours(){
         
-        Classe classe=new Classe();
+        Cours cours=new Cours();
         //On récup toutes la ligne puis instanciation à partir de l'arraylist.
             int currentRow=jTable1.getSelectedRow();
             
-            int id=(int)modelClass.getValueAt(currentRow,0);           
-            String nom=(String)modelClass.getValueAt(currentRow, 1);
-            
-            int id_annee =(int)modelClass.getValueAt(currentRow, 2);                      
-            AnneeScolaire annee=new AnneeScolaire(id_annee);
-                    
-            String nom_ecole=(String)modelClass.getValueAt(currentRow, 3);
-            Ecole ecole=new Ecole(1,nom_ecole);
-            
-            String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
-            Niveau niveau=findLevel(nom_niveau);
-            
-            
+            int id=(int)modelListeCours.getValueAt(currentRow,0);           
+            String nom=(String)modelListeCours.getValueAt(currentRow, 1);
+
             //Instanciation de la classe modifiée
-            classe=new Classe(id,nom,annee,ecole,niveau);
+           cours=new Cours(id,nom);
             
-            return classe;
+            return cours;
         
     }
     
@@ -415,28 +402,28 @@ public class ListeCours extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             
-            classe=new Classe();
-            classeDAO=new ClasseDAO();
+            cours=new Cours();
+            coursDAO=new CoursDAO();
             
             //Si aucune ligne n'est sélectionnée...
             if(jTable1.getSelectedRow()==-1){
-                if(modelClass.getRowCount()==0){
+                if(modelListeCours.getRowCount()==0){
                     JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
                 }
                 else{
-                    JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
+                    JOptionPane.showMessageDialog(rootPane, "S�lectionner une ligne.");
                 }
             }
             
             else{
-                classe=selectClass();                     
-                System.out.println("classe modifiee:");
-                classe.afficher();
+                cours=selectCours();                     
+                System.out.println("Cours modifiee:");
+                cours.afficher();
           
             
-            if(classe.equals(classeDAO.update(classe))){           
+            if(cours.equals(coursDAO.update(cours))){           
                 JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");  
-                classes=classeDAO.all(); //On remet à jour l'arraylist de classes depuis la bdd
+                cours1=coursDAO.all(); //On remet à jour l'arraylist de classes depuis la bdd
             }
             else{
                 System.out.println("oups");
@@ -451,14 +438,14 @@ public class ListeCours extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateActionPerformed
 
-    
+    /*
     //Afficher les infos de la classe sélectionnée
     private void displayStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayStudentsActionPerformed
         // TODO add your handling code here:
         
         //Si aucune ligne n'est sélectionnée...
         if(jTable1.getSelectedRow()==-1){
-            if(modelClass.getRowCount()==0){
+            if(modelListeCours.getRowCount()==0){
                 JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
             }
             else{

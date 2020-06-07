@@ -41,6 +41,9 @@ public class ListeEnseignant extends javax.swing.JFrame {
     static Cours cours =new Cours();
     AddCoursV2 addCoursV2=new AddCoursV2();
     
+    
+    static ArrayList<Utilisateur> util1=new ArrayList();
+    
     static ArrayList<Enseignant> enseign1=new ArrayList();
     static EnseignantDAO enseignDAO;
     static Enseignant enseign =new Enseignant();
@@ -79,32 +82,67 @@ public class ListeEnseignant extends javax.swing.JFrame {
     public void fill(){
         try {          
         	
-        	enseignDAO = new EnseignantDAO();
-            enseign1=enseignDAO.all(); //Récupère toutes les lignes de la table cours
-         
+        	
             EnseignantDAO enseignDAO= new EnseignantDAO();
             UtilisateurDAO utilDAO = new UtilisateurDAO();
             
+            coursDAO=new CoursDAO();
+            cours1 = coursDAO.all();
+            
+            
+        	enseignDAO = new EnseignantDAO();
+            enseign1=enseignDAO.all(); //Récupère toutes les lignes de la table cours
+            
             enseignDAO= new EnseignantDAO();
             enseign1=enseignDAO.all();
-           
+            
+            
+            utilDAO = new UtilisateurDAO();
+            util1 = utilDAO.all();
+
+            
+            String nom = "";
+            String prenom = "";
+            String nom_cours = "";
             
            
             pack();
+            
+            
+            
             System.out.println("fill");
             for(int i=0;i<enseign1.size();i++){
 
             	
                 int id_enseignant=enseign1.get(i).getId_utilisateur();
                 int id_cours= enseign1.get(i).getId_cours();
-
                 
+       		 	
+                
+                for(int j=0;j<util1.size();j++){
+                	 int id_utilisateur=util1.get(j).getId();
+                	 if(id_enseignant == id_utilisateur)
+                	 {
+                		 nom = util1.get(j).getNom();
+                		 prenom = util1.get(j).getPrenom();
+                	 }
+                }
+                
+                for(int k=0;k<cours1.size();k++){
+               	 int idducours=cours1.get(k).getId();
+               	 	System.out.println(idducours);
+	               	 if(id_cours == idducours)
+	               	 {
+	               		 nom_cours = cours1.get(k).getNom();
+	
+	               	 }
+                }
                 
                 //Cree l'object à mettre dans le model
-                Object[]cls={id_enseignant,id_cours};
+                Object[]cls={id_enseignant,id_cours,nom,prenom,nom_cours};
                 
                modelListeEnseignant.insertRow(modelListeEnseignant.getRowCount(), cls);                
-               enseign1.get(i).afficher(); //affichage console                
+               //enseign1.get(i).afficher(); //affichage console                
                 
             }
         } catch (ClassNotFoundException | SQLException ex) {
@@ -133,8 +171,8 @@ public class ListeEnseignant extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Id_utilisateur","Id_cours"}) 
-        {boolean[] canEdit = new boolean [] {false,true};
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(new Object [][] {}, new String [] {"Id_utilisateur","Id_cours","Nom","Prenom","Cours"}) 
+        {boolean[] canEdit = new boolean [] {false,true,true,true,true};
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -335,18 +373,20 @@ public class ListeEnseignant extends javax.swing.JFrame {
                 int id=(int) modelListeEnseignant.getValueAt(currentRow,0);//Récupère l'Id de la ligne selectionné
                 
                 System.out.println(id);
-                cours=coursDAO.find(id); //Trouver la personne dans la bdd avec l'id
+                enseign=enseignDAO.find(id); //Trouver la personne dans la bdd avec l'id
+                util = utilDAO.find(id);
 
                 
                 //Demande de confirmation
                 int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+cours.getNom()+" d'ID: "+id+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
-                    coursDAO.delete(cours); //Enlever de la bdd
-                    coursDAO.deleteId(id); //Enlever de la bdd
+                    enseignDAO.delete(enseign); //Enlever de la bdd
+                    enseignDAO.deleteId(id); //Enlever de la bdd
+                    utilDAO.deleteId(id);
                     modelListeEnseignant.removeRow(currentRow); 
                     
-                    cours1=coursDAO.all(); //On remet Ã  jour l'arraylist 
-                    JOptionPane.showMessageDialog(null, "Le cours "+cours.getNom()+" a été supprimé.");             
+                    enseign1=enseignDAO.all(); //On remet Ã  jour l'arraylist 
+                    JOptionPane.showMessageDialog(null, "L'enseignant "+enseign.getId_utilisateur()+" a été supprimé.");             
                 }
 
             }
