@@ -136,7 +136,7 @@ public class CoursDAO extends DAO<Cours>{
         	
         	System.out.println("Suppression Cours");
             Statement stmt=con.createStatement();
-            rs=stmt.executeQuery("DELETE FROM cours WHERE id="+cours.getId());
+            rs=stmt.executeQuery("DELETE FROM `cours` WHERE id="+cours.getId());
             
            // PreparedStatement prepare=con.prepareStatement("DELETE cours WHERE id="+cours.getId());
             //prepare.executeUpdate();

@@ -13,10 +13,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import DAO.UtilisateurDAO;
+import Modele.Utilisateur;
+
 
 public class Login extends javax.swing.JFrame{
 	
-
+	static ArrayList<Utilisateur> utillogin=new ArrayList();
+	
 	
 	public Login(){
 		initComponents();
@@ -88,7 +92,7 @@ public class Login extends javax.swing.JFrame{
         
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt)
-            {quitterActionPerformed(evt);}
+            {loginActionPerformed(evt);}
         });
 		 
 		 
@@ -100,6 +104,55 @@ public class Login extends javax.swing.JFrame{
         // TODO add your handling code here:
         dispose();//Ferme le menu
         System.exit(0);//Met fin au programme
+    }
+    
+    //Quitter
+    private void loginActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+    	
+    	 	String email = mail.getText();
+    	 	@SuppressWarnings("deprecation")
+			String passwd = mdp.getText();
+    	 	
+    	 	String email2 = "";
+    	 	String passwd2 = "";
+    	 	boolean connect = false;
+    	 	
+	    	UtilisateurDAO util= new UtilisateurDAO();
+	    	utillogin = util.all();
+	    	
+	    	System.out.println("mail:"+email+" pass:"+passwd);
+	    	
+	    	
+	    	 for(int i=0;i<utillogin.size();i++){
+	    		 
+	    		 email2 = utillogin.get(i).getEmail();
+	    		 passwd2 = utillogin.get(i).getPasswd();
+	    		 
+	    		 System.out.println("mail1:"+email+"  mail2:"+email2+" pass2:"+passwd2);
+	    		 
+	    		 if(email2==email)
+	    		 {
+	    			 //Utilisateur utillogged = utillogin.get(i);
+	    			 connect = true; 		
+	    			 System.out.println(connect);
+	    		 }	 	    		 
+	    	 }	
+	    	 
+	    	 if(connect == true) {
+	    		 dispose();//Ferme le menu
+		    	Menu menu = new Menu();
+		    	menu.setVisible(true);
+		    	menu.Start();  
+	    	 } 
+	    	 else
+	    	 { JOptionPane.showMessageDialog(null, "Erreur identification"); }
+
+	    	
+	    } catch (ClassNotFoundException | SQLException ex) {
+	        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	      
     }
 	
 	
@@ -127,6 +180,7 @@ public class Login extends javax.swing.JFrame{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+            	Utilisateur utillogged;
                 new Login().setVisible(true);
             }
         });

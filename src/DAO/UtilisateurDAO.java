@@ -33,6 +33,8 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
                 Utilisateur util = new Utilisateur();//Instancier la classe puis l'ajouter Ã  l'Array de toutes les classes
                 util = this.find(id);
                 
+              
+                
                 all.add(util);
                 
             }
@@ -61,7 +63,7 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
             if(rs.next()){
                 int id1=rs.getInt("id");
                 String email=rs.getString("email");
-                String passwd = rs.getString("email");
+                String passwd = rs.getString("passwd");
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
                 int droit = rs.getInt("droit");
@@ -154,6 +156,27 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
         }
     }
 
+    public void deleteId(int id) {
+        try {
+        	System.out.println("suppression utilisateur ID");
+        	//Statement stmt=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            //rs=stmt.executeQuery("DELETE FROM `cours` WHERE id=15");
+            
+        	 Statement stmt = con.createStatement();
+             PreparedStatement prepare=con.prepareStatement("DELETE FROM `utilisateur` WHERE id="+id);
+             prepare.executeUpdate();
+        	
+            
+            if(rs.first()){
+                System.out.println("L'utilisateurt numéro "+id+"a été supprimé.");
+            }
+            else
+                throw new SQLException();
+        } catch (SQLException ex) {
+            Logger.getLogger(EnseignantDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override //One ne modifie que l'ID utilisateur
     public Utilisateur update(Utilisateur util) {
         

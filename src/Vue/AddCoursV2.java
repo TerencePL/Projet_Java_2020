@@ -4,7 +4,7 @@ import DAO.*;
 import Modele.*;
 
 //import static Vue.Classes.modelClass;
-import static Vue.CoursVue.modelCours;
+import static Vue.ListeCours.modelListeCours;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,10 +13,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class AddCours extends javax.swing.JFrame{
+public class AddCoursV2 extends javax.swing.JFrame{
 	
 	
-	public AddCours() {
+	public AddCoursV2() {
 		initComponents();	
 	}
 	
@@ -43,22 +43,7 @@ public class AddCours extends javax.swing.JFrame{
         NomCours.setText("Nom du cours");
         
         IdEnseignant = new javax.swing.JTextField();
-        IdEnseignant.setText("Id de l'enseignant");  
-        
-        Semaine = new javax.swing.JTextField();
-        Semaine.setText("Semaine");
-        
-        Heure_Debut = new javax.swing.JTextField();
-        Heure_Debut.setText("Heure de début");
-        
-        Heure_Fin = new javax.swing.JTextField();
-        Heure_Fin.setText("Heure de fin");
-        
-        IdSalle = new javax.swing.JTextField();
-        IdSalle.setText("ID de la salle");
-        
-        IdSite = new javax.swing.JTextField();
-        IdSite.setText("ID du site");
+        IdEnseignant.setText("Id de l'enseignant");     
 		
 		Valider = new javax.swing.JButton();
 		Valider.setText("Valider");
@@ -77,11 +62,6 @@ public class AddCours extends javax.swing.JFrame{
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(NomCours, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(IdEnseignant, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Semaine, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Heure_Debut, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(Heure_Fin, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(IdSalle, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(IdSite, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(Valider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(quitter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1)))
@@ -98,17 +78,7 @@ public class AddCours extends javax.swing.JFrame{
                 .addComponent(NomCours, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(IdEnseignant, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addGap(40, 40, 40)
-                .addComponent(Semaine, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(Heure_Debut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(Heure_Fin, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(IdSalle, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(IdSite, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)  
                 .addComponent(Valider, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(quitter, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -147,90 +117,39 @@ public class AddCours extends javax.swing.JFrame{
             Cours cours=new Cours();
             CoursDAO coursDAO=new CoursDAO();
             
-            Seance seance = new Seance();
-            SeanceDAO seanceDAO = new SeanceDAO();
-            
-            Seance_Salles seance_salle = new Seance_Salles();
-            Seance_SallesDAO seance_salleDAO = new Seance_SallesDAO();
-            
-            Salle salle = new Salle();
-            SalleDAO salleDAO = new SalleDAO();
-            
-            Site site = new Site();
-            SiteDAO siteDAO = new SiteDAO();
-            
-            
-            
-            //AnneeScolaire annee=new AnneeScolaire();           
-            //Ecole ecole=new Ecole();
-            //Niveau niveau=new Niveau();
                        
             int id=0;  
             
             //On récupère les champs
             String nom= NomCours.getText();
             int id_enseignant = Integer.parseInt(IdEnseignant.getText());
-            int semaine = Integer.parseInt(Semaine.getText());
-            int heure_debut = Integer.parseInt(Heure_Debut.getText());
-            int heure_fin = Integer.parseInt(Heure_Fin.getText());
-            int id_salle = Integer.parseInt(IdSalle.getText());
-            int id_site = Integer.parseInt(IdSite.getText());
-            int etat =0;
-            int id_seance = 0;
-            int id_cours = 0;
-            int id_type = 0;
-            Date date = new Date(01/01/2020);
-               
-            //On convertit l'annee choisie (type object) en String puis en int
-            //int id_annee=Integer.parseInt((String)year.getSelectedItem());
-            
-            //ON instancie un objet année Ã  partir de son id en le cherchant dans l'arraylist
-            //annee=Classes.findYear(id_annee);
-            
-            
-            //String nom_ecole="ECE Paris";
-            //ecole=new Ecole(1,nom_ecole);
-       
-            //On instancie un niveau en le cherchant dans l'arraylist rÃ©cupÃ©rÃ© depuis la bdd
-            //String nom_niveau=(String)level.getSelectedItem();
-            //niveau=Classes.findLevel(nom_niveau);
+   
                            
             //Instancier la classe puis l'ajouter dans la bdd
             cours=new Cours(id,nom);
             cours=coursDAO.create(cours); 
-            id_cours=cours.getId();//On recupère l'id du conrs qu'on vient de créer
-            
-            
-            seance = new Seance(id,semaine,date,heure_debut,heure_fin,etat,id_cours,id_type);
-            seance=seanceDAO.create(seance); //Création de la séance associée
-            id_seance=seance.getId();
-            
-           
-            System.out.println(id_seance);
-            seance_salle = new Seance_Salles(id_seance,id_salle);
-            System.out.println(seance_salle.getId_seance());
-            seance_salle=seance_salleDAO.create(seance_salle); //Création de la séance associée
+         
             
             
             
-            //L'afficher dans le tableau
-            Object []cours1= {date,heure_debut,heure_fin,cours.getId(),cours.getNom()};
-            modelCours.insertRow(modelCours.getRowCount(), cours1);
+            //L'afficher dans le tableau 
+            Object []cours1= {cours.getId(),cours.getNom()};
+            modelListeCours.insertRow(modelListeCours.getRowCount(), cours1);
             
             //mettre à  jour l'arraylist de classes
-            CoursVue.cours1=CoursVue.coursDAO.all();
+            ListeCours.cours1=ListeCours.coursDAO.all();
             
             
-            //CrÃ©er aussi 3 trimestres pour l'annÃ©e choisie
+            //CrÃ©er aussi 3 trimestres pour l'année choisie
             
             //Message de confirmation
-            System.out.println("La classe "+cours.getNom()+" a été ajoutée.");
+            System.out.println("Le cours"+cours.getNom()+" a été ajoutée.");
             //JOptionPane.showMessageDialog(rootPane, "La classe "+cours.getNom()+" a été ajoutée.");
 
             dispose();          
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddCoursV2.class.getName()).log(Level.SEVERE, null, ex);
         }
                
         
@@ -274,7 +193,7 @@ public class AddCours extends javax.swing.JFrame{
             
             //L'afficher dans le tableau
             Object []cours1= {cours.getId(),cours.getNom()};
-            modelCours.insertRow(modelCours.getRowCount(), cours1);
+            modelListeCours.insertRow(modelListeCours.getRowCount(), cours1);
             
             //mettre à  jour l'arraylist de classes
             CoursVue.cours1=CoursVue.coursDAO.all();
@@ -289,7 +208,7 @@ public class AddCours extends javax.swing.JFrame{
             //dispose();          
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddCoursV2.class.getName()).log(Level.SEVERE, null, ex);
         }
                
         
@@ -313,7 +232,7 @@ public class AddCours extends javax.swing.JFrame{
             
             //L'afficher dans le tableau
             Object []cours1= {cours.getId(),cours.getNom()};
-            modelCours.insertRow(modelCours.getRowCount(), cours1);
+            modelListeCours.insertRow(modelListeCours.getRowCount(), cours1);
             
             //mettre à  jour l'arraylist de classes
             CoursVue.cours1=CoursVue.coursDAO.all();
@@ -327,7 +246,7 @@ public class AddCours extends javax.swing.JFrame{
             //dispose();
             
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddCoursV2.class.getName()).log(Level.SEVERE, null, ex);
         }      
     }//GEN-LAST:event_createActionPerformed
     
