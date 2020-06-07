@@ -42,11 +42,11 @@ public class Menu extends javax.swing.JFrame {
         cours = new javax.swing.JButton();
         cours.setText("Emploi du temps"); 
         
-        classes = new javax.swing.JButton();
-        classes.setText("Classes");
+        liste = new javax.swing.JButton();
+        liste.setText("Liste des matières");
         
         enseignants = new javax.swing.JButton();
-        enseignants.setText("Enseignants"); 
+        enseignants.setText("Liste Enseignants"); 
         
         reporting = new javax.swing.JButton();
         reporting.setText("Statistiques");  
@@ -68,7 +68,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
             .addComponent(quitter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(reporting, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(classes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(liste, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(enseignants, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
             .addGap(38, 38, 38)
@@ -87,7 +87,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(enseignants, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(classes, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(liste, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(reporting, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
@@ -103,15 +103,15 @@ public class Menu extends javax.swing.JFrame {
             {coursActionPerformed(evt);}
         });
         
-        classes.addActionListener(new java.awt.event.ActionListener() {
+        liste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //classesActionPerformed(evt);
+                listeActionPerformed(evt);
             }
         });
         
         enseignants.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //enseignantsActionPerformed(evt);
+                enseignantsActionPerformed(evt);
             }
         });
         
@@ -137,6 +137,15 @@ public class Menu extends javax.swing.JFrame {
         cours1.setVisible(true);
         dispose();
     }//GEN-LAST:event_classesActionPerformed
+    
+    
+    //Afficher la liste cours
+    private void listeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classesActionPerformed
+        // TODO add your handling code here:
+        ListeCours listecours1=new ListeCours();
+        listecours1.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_classesActionPerformed
 
     /*Afficher les éleves
     private void coursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursActionPerformed
@@ -148,15 +157,15 @@ public class Menu extends javax.swing.JFrame {
 	*/
     
     
-    /*Afficher les enseignants
+    //Afficher les enseignants
     private void enseignantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enseignantsActionPerformed
         // TODO add your handling code here:
-        Persons etudiant=new Persons("enseignant");
-        etudiant.setVisible(true);
+        ListeEnseignant listeenseign1=new ListeEnseignant();
+        listeenseign1.setVisible(true);
         dispose();
         
     }//GEN-LAST:event_enseignantsActionPerformed
-	*/
+	
     
     /*Afficher le reporting
     private void reportingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportingActionPerformed
@@ -221,7 +230,7 @@ public class Menu extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton classes;
+    private javax.swing.JButton liste;
     private javax.swing.JButton enseignants;
     private javax.swing.JButton cours;
     //private javax.swing.JLabel jLabel1;
