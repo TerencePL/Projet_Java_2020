@@ -7,6 +7,7 @@ package Vue;
 
 import DAO.CoursDAO;
 import DAO.EnseignantDAO;
+//import DAO.PersonneDAO;
 import DAO.SalleDAO;
 import DAO.SeanceDAO;
 import DAO.Seance_SallesDAO;
@@ -107,6 +108,42 @@ public class ListeCours extends javax.swing.JFrame {
     }
     
     /**
+     * Cherche une personne dans l'arraylist avec l'id
+     * @param find
+     */
+    public void findCours(String find){
+        try {          
+            coursDAO = new CoursDAO();           
+            //On recupere tout le monde
+            cours1=coursDAO.all();        
+            pack();
+            int findI = 0;
+            //Boucle de recherche
+            for(int j=0;j<cours1.size();j++){
+                String nom = cours1.get(j).getNom();
+                if(nom.equals(find))
+                {findI=j; // findi enregistre le j de la personne ayant l'ID recherchÔøΩ
+                }       
+            }            
+
+            if(findI!=0) {
+                int id=cours1.get(findI).getId();
+                String nom=cours1.get(findI).getNom();
+              
+                Object[] pers={id,nom}; //Creation de l'objet
+                modelListeCours.insertRow(jTable1.getRowCount(), pers); //Ajout en fin de tableau
+            }
+            else
+            {
+            	JOptionPane.showConfirmDialog(rootPane,"ID inconnu.");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
+        } 
+    }
+        
+    
+    /**
      * Remplit le tableau de classes avec celles trouvÈes dans la bdd, version consolle
      */
     public static void fillCours2(){
@@ -139,6 +176,8 @@ public class ListeCours extends javax.swing.JFrame {
         }
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,11 +221,14 @@ public class ListeCours extends javax.swing.JFrame {
         update.setText("Modifier");
        
         displayStudents = new javax.swing.JButton();
-        displayStudents.setText("Afficher la classe");
+        displayStudents.setText("Afficher les sÈances");
         
         jButtonRetour = new javax.swing.JButton();
         jButtonRetour.setText("Retour");
       
+        jButton5 = new javax.swing.JButton();
+        jButton5.setText("Rechercher");
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,10 +237,12 @@ public class ListeCours extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
+                        .addGap(46, 46, 46)     
                         .addComponent(jButtonRetour)
                         .addGap(262, 262, 262)
+                        .addComponent(jButton5)	
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    	
                     .addGroup(layout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -219,6 +263,7 @@ public class ListeCours extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonRetour)
+                    .addComponent(jButton5) 
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,6 +303,16 @@ public class ListeCours extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateActionPerformed(evt);
             }
+        });
+        
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                jButton5ActionPerformed(evt);
+
+            }
+
         });
         
         displayStudents.addActionListener(new java.awt.event.ActionListener() {
@@ -437,6 +492,29 @@ public class ListeCours extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
     }//GEN-LAST:event_updateActionPerformed
+    
+    //Recherche les etudiants par id
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        // TODO add your handling code here:
+		for (int i =jTable1.getRowCount()-1;i>=0;i--) 
+
+		{
+		modelListeCours.removeRow(i);   		
+		}
+
+		String rechercheStr = jTextField1.getText(); //recuperation depuis la boite Jtextfield 
+
+		if( rechercheStr != "") {
+		System.out.println("Recherche "+rechercheStr);
+		findCours(rechercheStr);
+		}
+		
+		else {
+			System.out.println("ID inconnu");
+		}
+
+    }
 
     /*
     //Afficher les infos de la classe s√©lectionn√©e
@@ -472,6 +550,7 @@ public class ListeCours extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton update;
+    private javax.swing.JButton jButton5;
     // End of variables declaration//GEN-END:variables
       
      

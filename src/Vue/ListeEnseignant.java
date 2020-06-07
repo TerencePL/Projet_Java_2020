@@ -192,8 +192,8 @@ public class ListeEnseignant extends javax.swing.JFrame {
         update = new javax.swing.JButton();
         update.setText("Modifier");
        
-        displayStudents = new javax.swing.JButton();
-        displayStudents.setText("Afficher la classe");
+        displaySeances = new javax.swing.JButton();
+        displaySeances.setText("Afficher les séances");
         
         jButtonRetour = new javax.swing.JButton();
         jButtonRetour.setText("Retour");
@@ -221,7 +221,7 @@ public class ListeEnseignant extends javax.swing.JFrame {
                         .addGap(175, 175, 175)
                         .addComponent(update)
                         .addGap(150, 150, 150)
-                        .addComponent(displayStudents)))
+                        .addComponent(displaySeances)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -238,7 +238,7 @@ public class ListeEnseignant extends javax.swing.JFrame {
                     .addComponent(add)
                     .addComponent(delete)
                     .addComponent(update)
-                    .addComponent(displayStudents))
+                    .addComponent(displaySeances))
                 .addContainerGap(227, Short.MAX_VALUE))
         );
 
@@ -271,7 +271,7 @@ public class ListeEnseignant extends javax.swing.JFrame {
             }
         });
         
-        displayStudents.addActionListener(new java.awt.event.ActionListener() {
+        displaySeances.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 //displayStudentsActionPerformed(evt);
             }
@@ -498,7 +498,7 @@ public class ListeEnseignant extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton delete;
-    private javax.swing.JButton displayStudents;
+    private javax.swing.JButton displaySeances;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
