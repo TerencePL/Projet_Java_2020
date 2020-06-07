@@ -56,7 +56,7 @@ public class ListeCours extends javax.swing.JFrame {
 	}
 	
     /**
-     * Creates new form Classes
+     * Creates new form 
      */
     public ListeCours(){
         initComponents();          
@@ -68,7 +68,7 @@ public class ListeCours extends javax.swing.JFrame {
     }
     
     /**
-     * Remplit l'mploi du temps avec celles trouvées dans la bdd, version graphique
+     * Remplit l'emploi du temps avec celles trouvées dans la bdd, version graphique
      */
     public void fillCours(){
         try {          
@@ -220,8 +220,8 @@ public class ListeCours extends javax.swing.JFrame {
         update = new javax.swing.JButton();
         update.setText("Modifier");
        
-        displayStudents = new javax.swing.JButton();
-        displayStudents.setText("Afficher les séances");
+        displaySeances = new javax.swing.JButton();
+        displaySeances.setText("Afficher les séances");
         
         jButtonRetour = new javax.swing.JButton();
         jButtonRetour.setText("Retour");
@@ -254,7 +254,7 @@ public class ListeCours extends javax.swing.JFrame {
                         .addGap(175, 175, 175)
                         .addComponent(update)
                         .addGap(150, 150, 150)
-                        .addComponent(displayStudents)))
+                        .addComponent(displaySeances)))
                 .addContainerGap(305, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -272,7 +272,7 @@ public class ListeCours extends javax.swing.JFrame {
                     .addComponent(add)
                     .addComponent(delete)
                     .addComponent(update)
-                    .addComponent(displayStudents))
+                    .addComponent(displaySeances))
                 .addContainerGap(227, Short.MAX_VALUE))
         );
 
@@ -315,9 +315,9 @@ public class ListeCours extends javax.swing.JFrame {
 
         });
         
-        displayStudents.addActionListener(new java.awt.event.ActionListener() {
+        displaySeances.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //displayStudentsActionPerformed(evt);
+                displaySeancesActionPerformed(evt);
             }
         });
 
@@ -477,7 +477,7 @@ public class ListeCours extends javax.swing.JFrame {
           
             
             if(cours.equals(coursDAO.update(cours))){           
-                JOptionPane.showMessageDialog(rootPane, "Modification effectuÃ©e avec succès.");  
+                JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");  
                 cours1=coursDAO.all(); //On remet Ã  jour l'arraylist de classes depuis la bdd
             }
             else{
@@ -511,40 +511,40 @@ public class ListeCours extends javax.swing.JFrame {
 		}
 		
 		else {
-			System.out.println("ID inconnu");
+			System.out.println("Inconnu");
 		}
 
     }
 
-    /*
+
     //Afficher les infos de la classe sÃ©lectionnÃ©e
-    private void displayStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayStudentsActionPerformed
+    private void displaySeancesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displaySeancesActionPerformed
         // TODO add your handling code here:
         
-        //Si aucune ligne n'est sÃ©lectionnÃ©e...
+        //Si aucune ligne n'est sélectionnée...
         if(jTable1.getSelectedRow()==-1){
             if(modelListeCours.getRowCount()==0){
                 JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
             }
             else{
-                JOptionPane.showMessageDialog(rootPane, "SÃ©lectionner une ligne.");
+                JOptionPane.showMessageDialog(rootPane, "Sélectionner une ligne.");
             }
         }
         else{
-            classe=selectClass();
-            OneClass oneclass=new OneClass();
-            oneclass.setVisible(true);
+           	cours = selectCours();
+           	
+            //ListeSeance listeseance=new ListeSeance();
+            //listeseance.setVisible(true);
         }
              
         
-    }//GEN-LAST:event_displayStudentsActionPerformed
+    }//GEN-LAST:event_displaySeancesActionPerformed
 
-    */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton delete;
-    private javax.swing.JButton displayStudents;
+    private javax.swing.JButton displaySeances;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

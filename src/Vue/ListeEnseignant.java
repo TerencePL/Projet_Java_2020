@@ -273,7 +273,7 @@ public class ListeEnseignant extends javax.swing.JFrame {
         
         displaySeances.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //displayStudentsActionPerformed(evt);
+                displaySeancesActionPerformed(evt);
             }
         });
 
@@ -402,33 +402,22 @@ public class ListeEnseignant extends javax.swing.JFrame {
     
     /**
      *Instancie et retourne une classe en selectionnant sa ligne dans le tableau
-     *
-    public Classe selectClass(){
+     */
+    public Enseignant selectEnseignant(){
         
-        Classe classe=new Classe();
+        Enseignant enseign=new Enseignant();
         //On récup toutes la ligne puis instanciation à partir de l'arraylist.
             int currentRow=jTable1.getSelectedRow();
             
-            int id=(int)modelClass.getValueAt(currentRow,0);           
-            String nom=(String)modelClass.getValueAt(currentRow, 1);
             
-            int id_annee =(int)modelClass.getValueAt(currentRow, 2);                      
-            AnneeScolaire annee=new AnneeScolaire(id_annee);
-                    
-            String nom_ecole=(String)modelClass.getValueAt(currentRow, 3);
-            Ecole ecole=new Ecole(1,nom_ecole);
-            
-            String nom_niveau=(String)modelClass.getValueAt(currentRow, 4);
-            Niveau niveau=findLevel(nom_niveau);
-            
+            int id_utilisateur=(int)modelListeEnseignant.getValueAt(currentRow,0);           
+            int id_cours = 0;
             
             //Instanciation de la classe modifiée
-            classe=new Classe(id,nom,annee,ecole,niveau);
-            
-            return classe;
-        
+            enseign=new Enseignant(id_utilisateur,id_cours);           
+            return enseign;   
     }
-    
+    /*
     //Modifier une classe
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         try {
@@ -469,15 +458,16 @@ public class ListeEnseignant extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Il semblerait qu'une erreur soit survenue.");
         }
     }//GEN-LAST:event_updateActionPerformed
-
+*/
     
     //Afficher les infos de la classe sélectionnée
-    private void displayStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayStudentsActionPerformed
+     
+    private void displaySeancesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayStudentsActionPerformed
         // TODO add your handling code here:
         
         //Si aucune ligne n'est sélectionnée...
         if(jTable1.getSelectedRow()==-1){
-            if(modelClass.getRowCount()==0){
+            if(modelListeEnseignant.getRowCount()==0){
                 JOptionPane.showMessageDialog(rootPane, "Le tableau est vide.");
             }
             else{
@@ -485,15 +475,17 @@ public class ListeEnseignant extends javax.swing.JFrame {
             }
         }
         else{
-            classe=selectClass();
-            OneClass oneclass=new OneClass();
-            oneclass.setVisible(true);
+        	int currentRow=jTable1.getSelectedRow();
+        	int id=(int)modelListeEnseignant.getValueAt(currentRow,0);
+            enseign=selectEnseignant();
+            ListeSeance listeseance=new ListeSeance(id);
+            listeseance.setVisible(true);
         }
              
         
     }//GEN-LAST:event_displayStudentsActionPerformed
 
-    */
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;

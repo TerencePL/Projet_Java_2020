@@ -121,10 +121,7 @@ public class Login extends javax.swing.JFrame{
 	    	UtilisateurDAO util= new UtilisateurDAO();
 	    	utillogin = util.all();
 	    	
-	    	System.out.println("mail:"+email+" pass:"+passwd);
-	    	
-	    	
-	    	 for(int i=0;i<utillogin.size();i++){
+	    	for(int i=0;i<utillogin.size();i++){
 	    		 
 	    		 email2 = utillogin.get(i).getEmail();
 	    		 passwd2 = utillogin.get(i).getPasswd();
