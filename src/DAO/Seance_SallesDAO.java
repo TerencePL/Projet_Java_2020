@@ -100,7 +100,7 @@ public class Seance_SallesDAO extends DAO<Seance_Salles>{
                 System.out.println("Seance_salle ajouté dans la base de données.");
                 
                 //recuperer l'id auto-incrémenté par la BDD
-                rs=stmt.executeQuery("SELECT id FROM seance_salles WHERE id_seance="+id_seance); //+" AND id_inscription="+id_inscription
+                rs=stmt.executeQuery("SELECT id FROM seance_salles WHERE id_seance='"+id_seance+"'"); //+" AND id_inscription="+id_inscription
                 if(rs.first()){
                     int id1=rs.getInt("id_seance");                
                     seance_salle.setId_seance(id1);

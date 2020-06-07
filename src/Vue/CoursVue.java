@@ -99,15 +99,17 @@ public class CoursVue extends javax.swing.JFrame {
                 Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
                 String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
                 		
-                Seance seance = seanceDAO.find(id);
+                Seance seance = seanceDAO.findId_Cours(id);
                 int id_seance = seance.getId();
                 Date date = seance.getDate();
                 int heure_debut= seance.getHeure_debut();
                 int heure_fin = seance.getHeure_fin();
                 int etat = seance.getEtat();
                 
+                
+                
                 Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
-                int id_salle = seance_salle.getId_seance();
+                int id_salle = seance_salle.getId_salle();
                 
                 Salle salle = salleDAO.find(id_salle);
                 String nom_salle = salle.getNom();
@@ -369,6 +371,8 @@ public class CoursVue extends javax.swing.JFrame {
     }//GEN-LAST:event_ajouterActionPerformed
     
     
+    
+    
     //Supprimer un cours
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
          try {
@@ -379,12 +383,9 @@ public class CoursVue extends javax.swing.JFrame {
                 }
                 else{
                     JOptionPane.showMessageDialog(rootPane, "Selectionner une ligne.");
-                }
-                
+                }  
             }
             else{
-                
-                // TODO add your handling code here:
                
                 cours=new Cours();
                 coursDAO=new CoursDAO();
@@ -398,14 +399,14 @@ public class CoursVue extends javax.swing.JFrame {
 
                 
                 //Demande de confirmation
-                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+cours.getNom()+" ?");
+                int confirm=JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment supprimer "+cours.getNom()+" d'ID: "+id+" ?");
                 if(confirm==JOptionPane.YES_OPTION){                   
                     coursDAO.delete(cours); //Enlever de la bdd
                     coursDAO.deleteId(id); //Enlever de la bdd
                     modelCours.removeRow(currentRow); 
                     
                     cours1=coursDAO.all(); //On remet Ã  jour l'arraylist 
-                    JOptionPane.showConfirmDialog(null, "Le cours"+cours.getNom()+" a été supprimé.");             
+                    JOptionPane.showMessageDialog(null, "Le cours "+cours.getNom()+" a été supprimé.");             
                 }
 
             }

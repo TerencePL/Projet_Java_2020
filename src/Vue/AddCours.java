@@ -8,6 +8,7 @@ import static Vue.CoursVue.modelCours;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,7 +29,7 @@ public class AddCours extends javax.swing.JFrame{
     private javax.swing.JTextField IdSalle;
     private javax.swing.JTextField IdSite;
     private javax.swing.JButton quitter;
-    private javax.swing.JButton login;   
+    private javax.swing.JButton Valider;   
     
 	private void initComponents() {
 		
@@ -41,7 +42,7 @@ public class AddCours extends javax.swing.JFrame{
 		NomCours = new javax.swing.JTextField();
         NomCours.setText("Nom du cours");
         
-        IdEnseignant = new javax.swing.JPasswordField();
+        IdEnseignant = new javax.swing.JTextField();
         IdEnseignant.setText("Id de l'enseignant");  
         
         Semaine = new javax.swing.JTextField();
@@ -59,8 +60,8 @@ public class AddCours extends javax.swing.JFrame{
         IdSite = new javax.swing.JTextField();
         IdSite.setText("ID du site");
 		
-		login = new javax.swing.JButton();
-		login.setText("Login");
+		Valider = new javax.swing.JButton();
+		Valider.setText("Login");
 		
 		quitter = new javax.swing.JButton();
 		quitter.setText("Quitter");
@@ -81,7 +82,7 @@ public class AddCours extends javax.swing.JFrame{
             .addComponent(Heure_Fin, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(IdSalle, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(IdSite, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(login, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Valider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(quitter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1)))
             .addGroup(layout.createSequentialGroup()
@@ -108,7 +109,7 @@ public class AddCours extends javax.swing.JFrame{
                 .addComponent(IdSalle, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(IdSite, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Valider, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(quitter, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(142, Short.MAX_VALUE))
@@ -123,9 +124,9 @@ public class AddCours extends javax.swing.JFrame{
             {quitterActionPerformed(evt);}
         });
         
-        login.addActionListener(new java.awt.event.ActionListener() {
+        Valider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt)
-            {quitterActionPerformed(evt);}
+            {validerActionPerformed(evt);}
         });
 		 
 		 
@@ -137,6 +138,102 @@ public class AddCours extends javax.swing.JFrame{
         // TODO add your handling code here:
         dispose();//Ferme le menu
     }
+    
+    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
+        try {
+            // TODO add your handling code here:
+        	
+        	//Seance seance = new Seance();
+            Cours cours=new Cours();
+            CoursDAO coursDAO=new CoursDAO();
+            
+            Seance seance = new Seance();
+            SeanceDAO seanceDAO = new SeanceDAO();
+            
+            Seance_Salles seance_salle = new Seance_Salles();
+            Seance_SallesDAO seance_salleDAO = new Seance_SallesDAO();
+            
+            Salle salle = new Salle();
+            SalleDAO salleDAO = new SalleDAO();
+            
+            Site site = new Site();
+            SiteDAO siteDAO = new SiteDAO();
+            
+            
+            
+            //AnneeScolaire annee=new AnneeScolaire();           
+            //Ecole ecole=new Ecole();
+            //Niveau niveau=new Niveau();
+                       
+            int id=0;  
+            
+            //On récupère les champs
+            String nom= NomCours.getText();
+            int id_enseignant = Integer.parseInt(IdEnseignant.getText());
+            int semaine = Integer.parseInt(Semaine.getText());
+            int heure_debut = Integer.parseInt(Heure_Debut.getText());
+            int heure_fin = Integer.parseInt(Heure_Fin.getText());
+            int id_salle = Integer.parseInt(IdSalle.getText());
+            int id_site = Integer.parseInt(IdSite.getText());
+            int etat =0;
+            int id_seance = 0;
+            int id_cours = 0;
+            int id_type = 0;
+            Date date = new Date(01/01/2020);
+               
+            //On convertit l'annee choisie (type object) en String puis en int
+            //int id_annee=Integer.parseInt((String)year.getSelectedItem());
+            
+            //ON instancie un objet année Ã  partir de son id en le cherchant dans l'arraylist
+            //annee=Classes.findYear(id_annee);
+            
+            
+            //String nom_ecole="ECE Paris";
+            //ecole=new Ecole(1,nom_ecole);
+       
+            //On instancie un niveau en le cherchant dans l'arraylist rÃ©cupÃ©rÃ© depuis la bdd
+            //String nom_niveau=(String)level.getSelectedItem();
+            //niveau=Classes.findLevel(nom_niveau);
+                           
+            //Instancier la classe puis l'ajouter dans la bdd
+            cours=new Cours(id,nom);
+            cours=coursDAO.create(cours); 
+            id_cours=cours.getId();//On recupère l'id du conrs qu'on vient de créer
+            
+            
+            seance = new Seance(id,semaine,date,heure_debut,heure_fin,etat,id_cours,id_type);
+            seance=seanceDAO.create(seance); //Création de la séance associée
+            id_seance=seance.getId();
+            
+           
+            
+            seance_salle = new Seance_Salles(id_seance,id_salle);
+            seance_salle=seance_salleDAO.create(seance_salle); //Création de la séance associée
+            
+            
+            
+            //L'afficher dans le tableau
+            Object []cours1= {date,heure_debut,heure_fin,cours.getId(),cours.getNom()};
+            modelCours.insertRow(modelCours.getRowCount(), cours1);
+            
+            //mettre à  jour l'arraylist de classes
+            CoursVue.cours1=CoursVue.coursDAO.all();
+            
+            
+            //CrÃ©er aussi 3 trimestres pour l'annÃ©e choisie
+            
+            //Message de confirmation
+            System.out.println("La classe "+cours.getNom()+" a été ajoutée.");
+            //JOptionPane.showMessageDialog(rootPane, "La classe "+cours.getNom()+" a été ajoutée.");
+
+            dispose();          
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddCours.class.getName()).log(Level.SEVERE, null, ex);
+        }
+               
+        
+    }//GEN-LAST:event_createActionPerformed
     
     //Ajout d'une classe
     private static void createActionPerformed() {//GEN-FIRST:event_createActionPerformed

@@ -82,6 +82,36 @@ public class SeanceDAO extends DAO<Seance>{
         return seance;
         
     }
+    
+	public Seance findId_Cours(int id) {
+		Seance seance = new Seance();
+	       
+        try {
+            Statement stmt=con.createStatement();            
+            rs=stmt.executeQuery("SELECT * FROM seance WHERE id_cours="+id);
+            
+            if(rs.next()){
+            	
+            	 int id_seance=rs.getInt("id");  
+                 int semaine=rs.getInt("semaine");
+                 Date date=rs.getDate("date");
+                 int heure_debut=rs.getInt("heure_debut");
+                 int heure_fin = rs.getInt("heure_fin");
+                 int etat = rs.getInt("etat");
+                 int id_cours = rs.getInt("id_cours");
+                 int id_type = rs.getInt("id_type");
+               
+                //Instancier la séance à return
+                seance =new Seance(id_seance,semaine,date,heure_debut,heure_fin,etat,id_cours,id_type);
+            }
+            
+            
+            
+        } catch (SQLException ex) {  //catch (SQLException | ClassNotFoundException ex)
+            Logger.getLogger(SeanceDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return seance;
+	}
 
     @Override
     public Seance create(Seance seance) {
@@ -101,7 +131,7 @@ public class SeanceDAO extends DAO<Seance>{
         	 System.out.println("Balise DAO/SeanceDAO");
         	 
             stmt = con.createStatement();
-            PreparedStatement prepare=con.prepareStatement("INSERT INTO seance (id,email,passwd,nom,prenom,droit) VALUES ("+id+","+semaine+","+date+","+date+","+heure_debut+","+heure_fin+","+etat+","+id_cours+","+id_type+")");
+            PreparedStatement prepare=con.prepareStatement("INSERT INTO seance (id,semaine,date,heure_debut,heure_fin,etat,id_cours,id_type) VALUES ('"+id+"','"+semaine+"','"+date+"','"+heure_debut+"','"+heure_fin+"','"+etat+"','"+id_cours+"','"+id_type+"')");
             
             /*
             prepare.setInt(1,id);
@@ -118,9 +148,10 @@ public class SeanceDAO extends DAO<Seance>{
                 System.out.println("S&ance ajouté dans la base de données.");
                 
                 //recuperer l'id auto-incrémenté par la BDD
-                rs=stmt.executeQuery("SELECT id FROM seance WHERE id="+id); //+" AND id_inscription="+id_inscription
+                rs=stmt.executeQuery("SELECT id FROM seance WHERE id_cours='"+id+"' AND date='"+date+"'"); //+" AND id_inscription="+id_inscription
                 if(rs.first()){
-                    int id1=rs.getInt("id");                
+                    int id1=rs.getInt("id");  
+                    System.out.println("!!!!!!!!!!!!id_seance: "+id1);
                     seance.setId(id1);
                 }                
             }else{
@@ -167,6 +198,8 @@ public class SeanceDAO extends DAO<Seance>{
         
         return  seance;
     }
+
+
     
 }
 
