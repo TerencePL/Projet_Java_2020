@@ -41,6 +41,8 @@ public class CoursVue extends javax.swing.JFrame {
     static Cours cours =new Cours();
     AddCours addCours=new AddCours();
     
+    static ArrayList<Seance> seance1=new ArrayList();
+    
     //static ArrayList<Niveau> allLevels=new ArrayList<Niveau>();
     //static ArrayList<AnneeScolaire>allYears=new ArrayList<AnneeScolaire>();
     
@@ -82,6 +84,7 @@ public class CoursVue extends javax.swing.JFrame {
             SiteDAO siteDAO = new SiteDAO();
             
             cours1=coursDAO.all(); //Récupère toutes les lignes de la table cours
+            seance1=seanceDAO.all();
            
             pack();
             System.out.println("fillcours");
@@ -98,45 +101,58 @@ public class CoursVue extends javax.swing.JFrame {
                 
                 Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
                 String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
-                		
-                Seance seance = seanceDAO.findId_Cours(id);
-                int id_seance = seance.getId();
-                Date date = seance.getDate();
-                int heure_debut= seance.getHeure_debut();
-                int heure_fin = seance.getHeure_fin();
-                int etat = seance.getEtat();
-                
-                
-                
-                Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
-                int id_salle = seance_salle.getId_salle();
-                
-                Salle salle = salleDAO.find(id_salle);
-                String nom_salle = salle.getNom();
-                int capacite = salle.getCapacite();
-                int id_site = salle.getId_site();
-                
-                Site site = siteDAO.find(id_site);
-                String nom_site = site.getNom();
-                
-                
-                switch(etat){
-                	case 0: etatStr = "En cours de validation";
-                			break;
-                	case 1: etatStr = "Validé";
-                			break;
-                	case 2: etatStr = "Annulé";
-                			break;
-                	default: etatStr = "Validé";
                 	
-                }
-                //if (date == )
+                for(int j=0;j<seance1.size();j++) {
+                	/*
+	                Seance seance = seanceDAO.findId_Cours(id);
+	                int id_seance = seance.getId();
+	                Date date = seance.getDate();
+	                int heure_debut= seance.getHeure_debut();
+	                int heure_fin = seance.getHeure_fin();
+	                int etat = seance.getEtat();
+	                */
+                	
+	                int id_coursseance= seance1.get(j).getId_cours(); //Id_cours de la séance
+                    int id_seance = seance1.get(j).getId();
+                    Date date = seance1.get(j).getDate();
+                    int heure_debut= seance1.get(j).getHeure_debut();
+                    int heure_fin = seance1.get(j).getHeure_fin();
+                    int etat = seance1.get(j).getEtat();
+	                
+	                
+	                
+	                Seance_Salles seance_salle = seance_salleDAO.find(id_seance);
+	                int id_salle = seance_salle.getId_salle();
+	                
+	                Salle salle = salleDAO.find(id_salle);
+	                String nom_salle = salle.getNom();
+	                int capacite = salle.getCapacite();
+	                int id_site = salle.getId_site();
+	                
+	                Site site = siteDAO.find(id_site);
+	                String nom_site = site.getNom();
+	                
+	                
+	                switch(etat){
+	                	case 0: etatStr = "En cours de validation";
+	                			break;
+	                	case 1: etatStr = "Validé";
+	                			break;
+	                	case 2: etatStr = "Annulé";
+	                			break;
+	                	default: etatStr = "Validé";
+	                	
+	                }
+	                //if (date == )
+	                
+	                if(id_coursseance == id) {
+			                //Cree l'object à mettre dans le model
+			                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site,etatStr};
+			                
+			               modelCours.insertRow(modelCours.getRowCount(), cls);
+			               }
+	             }
                 
-                
-                //Cree l'object à mettre dans le model
-                Object[]cls={date,heure_debut,heure_fin,id,nom,nom_enseignant,nom_salle,nom_site,etatStr};
-                
-               modelCours.insertRow(modelCours.getRowCount(), cls);                
                cours1.get(i).afficher(); //affichage console                
                 
             }

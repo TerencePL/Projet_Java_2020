@@ -85,21 +85,30 @@ public class ListeSeance extends javax.swing.JFrame {
               
            
             pack();
+            
+          
 
-            for(int i=0;i<enseign1.size();i++){
-            	int id_enseignant = enseign1.get(i).getId_utilisateur();
-            	int id_cours = enseign1.get(i).getId_cours();
+            
+            //for(int i=0;i<enseign1.size();i++){
+            //	int id_enseignant = enseign1.get(i).getId_utilisateur();
+            //	int id_cours = enseign1.get(i).getId_cours(); 
+           	//Id_cours de l'enseignant
             	
+            int id_cours=enseign1.get(idFind-1).getId_cours();
+            int id_enseignant = enseign1.get(idFind-1).getId_utilisateur();
+            
             	for(int j=0;j<seance1.size();j++) {
             		
-            		int id_coursseance= seance1.get(j).getId_cours();
+            		int id_coursseance= seance1.get(j).getId_cours(); //Id_cours de la séance
                     int id_seance = seance1.get(j).getId();
                     Date date = seance1.get(j).getDate();
                     int heure_debut= seance1.get(j).getHeure_debut();
-                    int heure_fin = seance1.get(i).getHeure_fin();
-                    int etat = seance1.get(i).getEtat();
+                    int heure_fin = seance1.get(j).getHeure_fin();
+                    int etat = seance1.get(j).getEtat();
                     System.out.println(id_cours);
                     if(id_cours == id_coursseance) {
+                    	//System.out.println(Id_cours);
+                    	
                     	String etatStr="";
                     	Utilisateur util = utilDAO.find(id_enseignant); //Trouve l'utilisateur associé à cet enseignant
                         String nom_enseignant = util.getNom();		//récupère le nom de cet enseigant
@@ -133,7 +142,7 @@ public class ListeSeance extends javax.swing.JFrame {
                         modelCours.insertRow(modelCours.getRowCount(), cls);   
   	
                     }
-            	}
+            	
                
                 
             }
@@ -395,8 +404,6 @@ public class ListeSeance extends javax.swing.JFrame {
     //Retour
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
         // TODO add your handling code here:
-        Menu menu=new Menu();
-        menu.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
