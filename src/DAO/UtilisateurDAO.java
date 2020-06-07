@@ -33,6 +33,8 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
                 Utilisateur util = new Utilisateur();//Instancier la classe puis l'ajouter à l'Array de toutes les classes
                 util = this.find(id);
                 
+              
+                
                 all.add(util);
                 
             }
@@ -61,7 +63,7 @@ public class UtilisateurDAO extends DAO<Utilisateur>{
             if(rs.next()){
                 int id1=rs.getInt("id");
                 String email=rs.getString("email");
-                String passwd = rs.getString("email");
+                String passwd = rs.getString("passwd");
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
                 int droit = rs.getInt("droit");

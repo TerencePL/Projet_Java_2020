@@ -25,7 +25,7 @@ public class Menu extends javax.swing.JFrame {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void Start() {
+ void Start() {
 
     
         quitter = new javax.swing.JButton();

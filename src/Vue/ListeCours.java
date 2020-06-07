@@ -256,7 +256,7 @@ public class ListeCours extends javax.swing.JFrame {
         
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //updateActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
         
@@ -422,7 +422,7 @@ public class ListeCours extends javax.swing.JFrame {
           
             
             if(cours.equals(coursDAO.update(cours))){           
-                JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succès.");  
+                JOptionPane.showMessageDialog(rootPane, "Modification effectuée avec succ�s.");  
                 cours1=coursDAO.all(); //On remet à jour l'arraylist de classes depuis la bdd
             }
             else{
